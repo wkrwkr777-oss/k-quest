@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PaymentMethodSelector } from "@/components/PaymentMethodSelector";
+import { AntiFraud } from "@/lib/utils";
 
 export default function PostQuestPage() {
     const { t, addToast, addQuest } = useStore();
@@ -22,6 +23,19 @@ export default function PostQuestPage() {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleNextStep = (nextStep: number) => {
+        // Step 2 Validation (Description Check)
+        if (step === 2 && nextStep === 3) {
+            const fraudType = AntiFraud.detect(formData.description);
+            if (fraudType) {
+                const warning = AntiFraud.getWarningMessage(fraudType);
+                addToast(warning, 'error');
+                return;
+            }
+        }
+        setStep(nextStep);
     };
 
     const handlePaymentSuccess = async () => {
@@ -96,7 +110,7 @@ export default function PostQuestPage() {
                                     <option>Photography</option>
                                 </select>
                             </div>
-                            <Button type="button" onClick={() => setStep(2)} className="w-full py-6">
+                            <Button type="button" onClick={() => handleNextStep(2)} className="w-full py-6">
                                 Next Step <ArrowRight className="w-4 h-4 ml-2" />
                             </Button>
                         </div>
@@ -129,10 +143,10 @@ export default function PostQuestPage() {
                                 />
                             </div>
                             <div className="flex gap-4">
-                                <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1 py-6">
+                                <Button type="button" variant="outline" onClick={() => handleNextStep(1)} className="flex-1 py-6">
                                     Back
                                 </Button>
-                                <Button type="button" onClick={() => setStep(3)} className="flex-1 py-6">
+                                <Button type="button" onClick={() => handleNextStep(3)} className="flex-1 py-6">
                                     Next Step <ArrowRight className="w-4 h-4 ml-2" />
                                 </Button>
                             </div>
@@ -178,7 +192,7 @@ export default function PostQuestPage() {
                             </div>
 
                             <div className="flex gap-4 mt-8">
-                                <Button type="button" variant="outline" onClick={() => setStep(2)} className="flex-1 py-6">
+                                <Button type="button" variant="outline" onClick={() => handleNextStep(2)} className="flex-1 py-6">
                                     Back
                                 </Button>
                             </div>

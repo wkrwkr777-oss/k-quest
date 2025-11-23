@@ -6,10 +6,11 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useStore, Application } from "@/lib/store";
 import { useState } from "react";
+import { AntiFraud } from "@/lib/utils";
 
 export default function QuestDetailPage() {
     const params = useParams();
-    const { t, user, userId, applyForQuest, applications, acceptApplicant, rejectApplicant } = useStore();
+    const { t, user, userId, applyForQuest, applications, acceptApplicant, rejectApplicant, addToast } = useStore();
     const id = params.id as string;
 
     // State for Apply Modal
@@ -45,6 +46,15 @@ export default function QuestDetailPage() {
 
     const handleApply = () => {
         if (!applyMessage.trim()) return;
+
+        // Anti-Fraud Check
+        const fraudType = AntiFraud.detect(applyMessage);
+        if (fraudType) {
+            const warning = AntiFraud.getWarningMessage(fraudType);
+            addToast(warning, 'error');
+            return;
+        }
+
         applyForQuest(id, applyMessage);
         setIsApplyModalOpen(false);
         setApplyMessage("");

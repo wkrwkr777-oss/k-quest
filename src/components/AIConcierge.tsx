@@ -4,10 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { MessageSquare, X, Send, Sparkles, Bot } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useStore } from "@/lib/store";
+import { AntiFraud } from "@/lib/utils";
 
 export function AIConcierge() {
     const [isOpen, setIsOpen] = useState(false);
-    const { language, t } = useStore(); // Get t from store
+    const { language, t, addToast } = useStore(); // Get t from store
     const [messages, setMessages] = useState<{ role: 'ai' | 'user', text: string }[]>([
         { role: 'ai', text: t.ai.welcome } // Use translation for initial state
     ]);
@@ -35,6 +36,16 @@ export function AIConcierge() {
 
     const handleSend = () => {
         if (!input.trim()) return;
+
+        // Anti-Fraud Check
+        const fraudType = AntiFraud.detect(input);
+        if (fraudType) {
+            const warning = AntiFraud.getWarningMessage(fraudType);
+            // Show warning as a system message in chat
+            setMessages(prev => [...prev, { role: 'user', text: input }, { role: 'ai', text: warning }]);
+            setInput("");
+            return;
+        }
 
         const userMsg = input;
         setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
