@@ -10,6 +10,16 @@ interface Toast {
     type: 'success' | 'info' | 'error';
 }
 
+export interface Application {
+    id: string;
+    questId: string;
+    applicantId: string;
+    applicantName: string; // Mock name for display
+    message: string;
+    status: 'pending' | 'accepted' | 'rejected';
+    createdAt: string;
+}
+
 interface AppState {
     // Language
     language: Language;
@@ -28,7 +38,12 @@ interface AppState {
     // Quests (Mock)
     userQuests: any[];
     addQuest: (quest: any) => void;
-    acceptQuest: (questId: string) => void;
+
+    // Application System
+    applications: Application[];
+    applyForQuest: (questId: string, message: string) => void;
+    acceptApplicant: (questId: string, applicationId: string) => void;
+    rejectApplicant: (applicationId: string) => void;
 
     // Wallet (Mock)
     balance: number;
@@ -63,6 +78,28 @@ export const useStore = create<AppState>((set, get) => ({
                 userEmail: 'admin@kquest.com',
             });
             get().addToast('Welcome Admin!', 'success');
+            return;
+        }
+
+        // Demo User: Foreigner
+        if (email === 'traveler@demo.com') {
+            set({
+                user: 'foreigner',
+                userId: 'demo-traveler-id',
+                userEmail: 'traveler@demo.com',
+            });
+            get().addToast('Welcome Traveler!', 'success');
+            return;
+        }
+
+        // Demo User: Local
+        if (email === 'local@demo.com') {
+            set({
+                user: 'local',
+                userId: 'demo-local-id',
+                userEmail: 'local@demo.com',
+            });
+            get().addToast('Welcome Local Expert!', 'success');
             return;
         }
 
@@ -144,81 +181,87 @@ export const useStore = create<AppState>((set, get) => ({
             return;
         }
 
-        // If Admin, just mock it
-        if (userId === 'admin-user-id') {
-            const newQuest = {
-                ...quest,
-                id: Math.random().toString(36).substring(7),
-                requester_id: userId,
-                status: 'open',
-                created_at: new Date().toISOString(),
-            };
-            set((state) => ({ userQuests: [newQuest, ...state.userQuests] }));
-            get().addToast('Quest posted (Admin Mode)', 'success');
+        const newQuest = {
+            ...quest,
+            id: Math.random().toString(36).substring(7),
+            requester_id: userId,
+            status: 'open',
+            created_at: new Date().toISOString(),
+        };
+        set((state) => ({ userQuests: [newQuest, ...state.userQuests] }));
+        get().addToast('Quest posted successfully!', 'success');
+    },
+
+    // Application System
+    applications: [
+        // Mock Data for Demo
+        {
+            id: 'app-1',
+            questId: '1', // Matches the first mock quest
+            applicantId: 'demo-local-id',
+            applicantName: 'Kim Min-su',
+            message: 'I live in Hongdae and can visit the restaurant right now!',
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 'app-2',
+            questId: '1',
+            applicantId: 'another-local',
+            applicantName: 'Lee Ji-won',
+            message: 'Professional food vlogger here. I can take high quality videos.',
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        }
+    ],
+
+    applyForQuest: (questId, message) => {
+        const userId = get().userId;
+        if (!userId) {
+            get().addToast('Please login to apply', 'error');
             return;
         }
 
-        try {
-            const { data, error } = await supabase
-                .from('quests')
-                .insert([
-                    {
-                        ...quest,
-                        requester_id: userId,
-                        status: 'open',
-                        reward: parseFloat(quest.reward.replace('$', '')), // Ensure number
-                    }
-                ])
-                .select();
+        const newApp: Application = {
+            id: Math.random().toString(36).substring(7),
+            questId,
+            applicantId: userId,
+            applicantName: 'My Profile', // In real app, fetch user name
+            message,
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        };
 
-            if (error) throw error;
-
-            if (data) {
-                set((state) => ({ userQuests: [data[0], ...state.userQuests] }));
-                get().addToast('Quest posted successfully!', 'success');
-            }
-        } catch (error: any) {
-            console.error('Add Quest Error:', error);
-            // Fallback to mock if DB fails (e.g. table doesn't exist yet)
-            const newQuest = {
-                ...quest,
-                id: Math.random().toString(36).substring(7),
-                requester_id: userId,
-                status: 'open',
-                created_at: new Date().toISOString(),
-            };
-            set((state) => ({ userQuests: [newQuest, ...state.userQuests] }));
-            get().addToast('Quest posted (Offline Mode)', 'info');
-        }
+        set((state) => ({ applications: [...state.applications, newApp] }));
+        get().addToast('Application submitted! Waiting for requester approval.', 'success');
     },
 
-    acceptQuest: async (questId) => {
-        const userId = get().userId;
-        if (!userId) return;
+    acceptApplicant: (questId, applicationId) => {
+        // 1. Mark application as accepted
+        set((state) => ({
+            applications: state.applications.map(app =>
+                app.id === applicationId ? { ...app, status: 'accepted' } :
+                    app.questId === questId ? { ...app, status: 'rejected' } : app // Reject others for same quest
+            )
+        }));
 
-        try {
-            const { error } = await supabase
-                .from('quests')
-                .update({ status: 'in_progress', performer_id: userId })
-                .eq('id', questId);
+        // 2. Update Quest Status
+        set((state) => ({
+            userQuests: state.userQuests.map(q =>
+                q.id === questId ? { ...q, status: 'in_progress', performer_id: 'selected-user' } : q
+            )
+        }));
 
-            if (error) throw error;
+        get().addToast('Applicant accepted! Quest is now in progress.', 'success');
+    },
 
-            set((state) => ({
-                userQuests: state.userQuests.map(q =>
-                    q.id === questId ? { ...q, status: 'in_progress', performer_id: userId } : q
-                )
-            }));
-            get().addToast('Quest accepted!', 'success');
-        } catch (error) {
-            // Fallback
-            set((state) => ({
-                userQuests: state.userQuests.map(q =>
-                    q.id === questId ? { ...q, status: 'in_progress', performer_id: userId } : q
-                )
-            }));
-            get().addToast('Quest accepted (Offline Mode)', 'info');
-        }
+    rejectApplicant: (applicationId) => {
+        set((state) => ({
+            applications: state.applications.map(app =>
+                app.id === applicationId ? { ...app, status: 'rejected' } : app
+            )
+        }));
+        get().addToast('Applicant rejected.', 'info');
     },
 
     // Wallet - MOCK
