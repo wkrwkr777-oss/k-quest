@@ -5,6 +5,7 @@ import { Search, Menu, User, Globe } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useStore } from "@/lib/store";
 import { useEffect, useState } from "react";
+import { NotificationCenter } from "@/components/NotificationCenter";
 
 export function Header() {
     const { language, setLanguage, t, user, logout, addToast } = useStore();
@@ -78,6 +79,9 @@ export function Header() {
                                 <Globe className="h-4 w-4" />
                                 {language === 'en' ? "KO" : "EN"}
                             </button>
+
+                            {/* Notification Center (only when logged in) */}
+                            {user && <NotificationCenter />}
 
                             <button className="text-white hover:text-[#D4AF37] transition-colors hidden md:block">
                                 <Search className="h-5 w-5" />
