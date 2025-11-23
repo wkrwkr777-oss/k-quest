@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { MessageSquare, X, Send, Sparkles, Bot } from "lucide-react";
+import { MessageSquare, X, Send, Sparkles, MessageSquareText } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useStore } from "@/lib/store";
 import { AntiFraud } from "@/lib/utils";
@@ -65,7 +65,7 @@ export function AIConcierge() {
                 onClick={() => setIsOpen(true)}
                 className={`fixed bottom-6 right-6 z-50 p-4 bg-[#D4AF37] text-[#1A1A1A] rounded-full shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:scale-110 transition-transform duration-300 group ${isOpen ? 'hidden' : 'flex'}`}
             >
-                <MessageSquare className="w-6 h-6" />
+                <MessageSquareText className="w-6 h-6" />
                 <span className="absolute right-full mr-4 bg-[#1A1A1A] text-[#D4AF37] text-xs px-3 py-1 rounded border border-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap hidden md:block">
                     {t.ai.title}
                 </span>
@@ -78,7 +78,7 @@ export function AIConcierge() {
                     <div className="p-4 border-b border-[#333] bg-[#262626] flex justify-between items-center shrink-0">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-[#D4AF37] rounded-full flex items-center justify-center">
-                                <Bot className="w-6 h-6 text-[#1A1A1A]" />
+                                <MessageSquareText className="w-6 h-6 text-[#1A1A1A]" />
                             </div>
                             <div>
                                 <h3 className="text-white font-serif">{t.ai.title}</h3>

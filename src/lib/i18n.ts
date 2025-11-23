@@ -85,14 +85,16 @@ export const translations = {
             questPosted: "Quest submitted successfully",
         },
         ai: {
-            title: "K-Manager",
-            subtitle: "AI Concierge",
-            placeholder: "Type your request...",
-            welcome: "Welcome to K-Quest Premium Concierge. How may I assist you today?",
+            title: "K-Quest Assistant",
+            subtitle: "24/7 Automated Support",
+            placeholder: "Ask for help...",
+            welcome: "Hello! I am the K-Quest automated assistant. How can I help you today?",
             responses: [
-                "I can certainly help with that. Our specialists are available to assist.",
-                "That is an excellent choice. Let me provide you with more details.",
-                "I understand. I will prioritize this request for you immediately."
+                "I can help you find a quest.",
+                "Please check the quest details page.",
+                "You can contact support via email.",
+                "Payment is secured by our platform.",
+                "Please avoid sharing personal contact info."
             ]
         },
         filters: {
@@ -271,14 +273,16 @@ export const translations = {
             questPosted: "퀘스트가 성공적으로 등록되었습니다",
         },
         ai: {
-            title: "K-매니저",
-            subtitle: "AI 컨시어지",
-            placeholder: "메시지를 입력하세요...",
-            welcome: "K-Quest 프리미엄 컨시어지에 오신 것을 환영합니다. 무엇을 도와드릴까요?",
+            title: "K-Quest 도우미",
+            subtitle: "24시간 자동 응답",
+            placeholder: "무엇을 도와드릴까요?",
+            welcome: "안녕하세요! K-Quest 자동 응답 도우미입니다. 무엇을 도와드릴까요?",
             responses: [
-                "물론입니다. 저희 전문가들이 도와드릴 수 있습니다.",
-                "탁월한 선택이십니다. 더 자세한 정보를 제공해 드리겠습니다.",
-                "알겠습니다. 고객님의 요청을 최우선으로 처리하겠습니다."
+                "퀘스트 찾기를 도와드릴 수 있습니다.",
+                "퀘스트 상세 페이지를 확인해주세요.",
+                "이메일로 문의하실 수 있습니다.",
+                "결제는 안전하게 보호됩니다.",
+                "개인 연락처 공유는 자제해주세요."
             ]
         },
         filters: {
