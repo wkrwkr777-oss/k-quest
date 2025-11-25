@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Quest - 서비스 준비중</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 50%, #0A0A0A 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        h1 {
+            font-size: 4em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, white, #D4AF37, white);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.8em;
+            color: #D4AF37;
+            margin-bottom: 10px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+
+        .subtitle-en {
+            font-size: 1.2em;
+            color: #999;
+            margin-bottom: 40px;
+        }
+
+        .description {
+            font-size: 1.1em;
+            color: #ccc;
+            margin-bottom: 60px;
+            line-height: 1.6;
+        }
+
+        .divider {
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #D4AF37, transparent);
+            margin: 40px auto;
+        }
+
+        .business-info {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .business-info h2 {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #999;
+            font-size: 1em;
+        }
+
+        .info-value {
+            color: white;
+            font-weight: 500;
+            font-size: 1em;
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .subtitle {
+                font-size: 1.2em;
+            }
+
+            .business-info {
+                padding: 20px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="icon">🔧</div>
+
+        <h1>K-Quest</h1>
+
+        <p class="subtitle">서비스 준비중</p>
+        <p class="subtitle-en">Coming Soon</p>
+
+        <div class="description">
+            <p>프리미엄 한국 체험 플랫폼을 준비하고 있습니다.</p>
+            <p style="color: #777; margin-top: 10px;">We are preparing a premium Korean experience platform.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="business-info">
+            <h2>사업자 정보</h2>
+
+            <div class="info-row">
+                <span class="info-label">상호명</span>
+                <span class="info-value">K-Quest</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">대표자</span>
+                <span class="info-value">박세희</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">사업자등록번호</span>
+                <span class="info-value">발급 예정</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">통신판매업 신고번호</span>
+                <span class="info-value">신청 중</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">이메일</span>
+                <span class="info-value">contact@quest-k.com</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 K-Quest. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>

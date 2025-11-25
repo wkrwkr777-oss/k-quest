@@ -120,11 +120,5 @@ export const metadata: Metadata = {
     verification: {
         google: 'YOUR_GOOGLE_VERIFICATION_CODE',
         yandex: 'YOUR_YANDEX_VERIFICATION_CODE',
-        bing: 'YOUR_BING_VERIFICATION_CODE',
-    },
-
-    // App Links (모바일 딥링크)
-    appLinks: {
-        android: appPackage: 'com.kquest.app',
     },
 };
