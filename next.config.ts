@@ -149,9 +149,6 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   // 이미지 최적화
   images: {
     remotePatterns: [

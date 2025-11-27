@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server';
 const SITE_PASSWORD = 'kquest2024secret';
 const MAINTENANCE_MODE = true; // true = 비공개
 
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
     // 강제 비공개 모드
     if (!MAINTENANCE_MODE) {
         return NextResponse.next();
