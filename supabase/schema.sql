@@ -1,87 +1,118 @@
--- K-Quest Database Schema
--- 포텐타로님: 이 파일을 Supabase SQL Editor에 복사-붙여넣기하세요!
+-- 💎 K-Quest Grand Master Schema
+-- Phase 1 ~ Phase 5 모든 기능을 지원하는 통합 스키마
 
--- Users Table
-CREATE TABLE IF NOT EXISTS users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email TEXT UNIQUE NOT NULL,
-  role TEXT CHECK (role IN ('foreigner', 'local')) NOT NULL,
-  nickname TEXT NOT NULL,
-  avatar_url TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+-- 1. Users & Profiles (사용자 및 프로필)
+create table public.profiles (
+  id uuid references auth.users not null primary key,
+  email text,
+  full_name text,
+  avatar_url text,
+  role text check (role in ('user', 'expert', 'admin')) default 'user',
+  is_verified boolean default false,
+  verification_level text check (verification_level in ('none', 'basic', 'id', 'video')) default 'none',
+  tier text check (tier in ('bronze', 'silver', 'gold', 'platinum')) default 'bronze',
+  bio text,
+  languages text[],
+  skills text[],
+  rating float default 0,
+  review_count int default 0,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
--- Quests Table
-CREATE TABLE IF NOT EXISTS quests (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  title TEXT NOT NULL,
-  description TEXT NOT NULL,
-  reward DECIMAL(10, 2) NOT NULL,
-  location TEXT NOT NULL,
-  category TEXT NOT NULL,
-  status TEXT CHECK (status IN ('open', 'in_progress', 'completed', 'cancelled')) DEFAULT 'open',
-  requester_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  performer_id UUID REFERENCES users(id) ON DELETE SET NULL,
-  image_url TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+-- 2. Quests (퀘스트 시스템)
+create table public.quests (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references public.profiles(id) not null,
+  title text not null,
+  description text not null,
+  category text not null,
+  location text,
+  budget_min int,
+  budget_max int,
+  currency text default 'USD',
+  status text check (status in ('open', 'in_progress', 'completed', 'cancelled', 'dispute')) default 'open',
+  images text[],
+  deadline timestamp with time zone,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
--- Transactions Table
-CREATE TABLE IF NOT EXISTS transactions (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  quest_id UUID REFERENCES quests(id) ON DELETE CASCADE,
-  amount DECIMAL(10, 2) NOT NULL,
-  platform_fee DECIMAL(10, 2) NOT NULL,
-  performer_earning DECIMAL(10, 2) NOT NULL,
-  status TEXT CHECK (status IN ('pending', 'completed', 'failed')) DEFAULT 'pending',
-  paypal_payment_id TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+-- 3. Proposals (견적 및 매칭)
+create table public.proposals (
+  id uuid default uuid_generate_v4() primary key,
+  quest_id uuid references public.quests(id) not null,
+  expert_id uuid references public.profiles(id) not null,
+  price int not null,
+  currency text default 'USD',
+  message text,
+  status text check (status in ('pending', 'accepted', 'rejected')) default 'pending',
+  estimated_days int,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
--- Indexes for performance
-CREATE INDEX IF NOT EXISTS idx_quests_status ON quests(status);
-CREATE INDEX IF NOT EXISTS idx_quests_requester ON quests(requester_id);
-CREATE INDEX IF NOT EXISTS idx_quests_performer ON quests(performer_id);
-CREATE INDEX IF NOT EXISTS idx_transactions_quest ON transactions(quest_id);
+-- 4. Payments & Escrow (결제 시스템)
+create table public.payments (
+  id uuid default uuid_generate_v4() primary key,
+  quest_id uuid references public.quests(id) not null,
+  payer_id uuid references public.profiles(id) not null,
+  receiver_id uuid references public.profiles(id) not null,
+  amount int not null,
+  currency text default 'USD',
+  provider text check (provider in ('stripe', 'paypal', 'crypto')),
+  status text check (status in ('pending', 'held_in_escrow', 'released', 'refunded')) default 'pending',
+  transaction_id text,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
 
--- Enable Row Level Security
-ALTER TABLE users ENABLE ROW LEVEL SECURITY;
-ALTER TABLE quests ENABLE ROW LEVEL SECURITY;
-ALTER TABLE transactions ENABLE ROW LEVEL SECURITY;
+-- 5. Reviews (리뷰 및 평가)
+create table public.reviews (
+  id uuid default uuid_generate_v4() primary key,
+  quest_id uuid references public.quests(id) not null,
+  reviewer_id uuid references public.profiles(id) not null,
+  target_id uuid references public.profiles(id) not null,
+  rating int check (rating >= 1 and rating <= 5),
+  comment text,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
 
--- RLS Policies
--- Users can read all profiles
-CREATE POLICY "Users can view all profiles"
-  ON users FOR SELECT
-  USING (true);
+-- 6. Chat Messages (채팅 시스템)
+create table public.messages (
+  id uuid default uuid_generate_v4() primary key,
+  quest_id uuid references public.quests(id),
+  sender_id uuid references public.profiles(id) not null,
+  receiver_id uuid references public.profiles(id) not null,
+  content text not null,
+  is_read boolean default false,
+  type text check (type in ('text', 'image', 'system')) default 'text',
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
 
--- Users can update their own profile
-CREATE POLICY "Users can update own profile"
-  ON users FOR UPDATE
-  USING (auth.uid() = id);
+-- 7. Notifications (알림)
+create table public.notifications (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references public.profiles(id) not null,
+  title text not null,
+  message text not null,
+  type text check (type in ('info', 'success', 'warning', 'error', 'premium')),
+  is_read boolean default false,
+  link text,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
 
--- Anyone can view open quests
-CREATE POLICY "Anyone can view quests"
-  ON quests FOR SELECT
-  USING (true);
+-- RLS (Row Level Security) Policies
+alter table public.profiles enable row level security;
+alter table public.quests enable row level security;
+alter table public.proposals enable row level security;
+alter table public.payments enable row level security;
+alter table public.reviews enable row level security;
+alter table public.messages enable row level security;
+alter table public.notifications enable row level security;
 
--- Authenticated users can create quests
-CREATE POLICY "Authenticated users can create quests"
-  ON quests FOR INSERT
-  WITH CHECK (auth.uid() = requester_id);
+-- Basic Policies (누구나 읽기 가능, 본인만 수정 가능)
+create policy "Public profiles are viewable by everyone." on public.profiles for select using (true);
+create policy "Users can insert their own profile." on public.profiles for insert with check (auth.uid() = id);
+create policy "Users can update own profile." on public.profiles for update using (auth.uid() = id);
 
--- Quest owners can update their quests
-CREATE POLICY "Quest owners can update"
-  ON quests FOR UPDATE
-  USING (auth.uid() = requester_id OR auth.uid() = performer_id);
-
--- Users can view their own transactions
-CREATE POLICY "Users can view own transactions"
-  ON transactions FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM quests
-      WHERE quests.id = transactions.quest_id
-      AND (quests.requester_id = auth.uid() OR quests.performer_id = auth.uid())
-    )
-  );
+create policy "Quests are viewable by everyone." on public.quests for select using (true);
+create policy "Authenticated users can create quests." on public.quests for insert with check (auth.role() = 'authenticated');
+create policy "Users can update own quests." on public.quests for update using (auth.uid() = user_id);

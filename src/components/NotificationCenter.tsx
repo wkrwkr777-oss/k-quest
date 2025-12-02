@@ -14,20 +14,20 @@ import {
 import Link from 'next/link';
 
 export function NotificationCenter() {
-    const { user } = useStore();
+    const { userId } = useStore();
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [unreadCount, setUnreadCount] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        if (!user) return;
+        if (!userId) return;
 
         loadNotifications();
         loadUnreadCount();
 
         // 실시간 구독
-        const unsubscribe = subscribeToNotifications(user.id, (newNotification) => {
+        const unsubscribe = subscribeToNotifications(userId, (newNotification) => {
             setNotifications((prev) => [newNotification, ...prev]);
             setUnreadCount((prev) => prev + 1);
 
@@ -36,19 +36,19 @@ export function NotificationCenter() {
         });
 
         return unsubscribe;
-    }, [user]);
+    }, [userId]);
 
     const loadNotifications = async () => {
-        if (!user) return;
+        if (!userId) return;
         setIsLoading(true);
-        const data = await getNotifications(user.id);
+        const data = await getNotifications(userId);
         setNotifications(data);
         setIsLoading(false);
     };
 
     const loadUnreadCount = async () => {
-        if (!user) return;
-        const count = await getUnreadCount(user.id);
+        if (!userId) return;
+        const count = await getUnreadCount(userId);
         setUnreadCount(count);
     };
 
@@ -61,8 +61,8 @@ export function NotificationCenter() {
     };
 
     const handleMarkAllAsRead = async () => {
-        if (!user) return;
-        await markAllAsRead(user.id);
+        if (!userId) return;
+        await markAllAsRead(userId);
         setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
         setUnreadCount(0);
     };
@@ -94,7 +94,7 @@ export function NotificationCenter() {
         return icons[type] || '🔔';
     };
 
-    if (!user) return null;
+    if (!userId) return null;
 
     return (
         <div className="relative">

@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 기본 페이지
     const routes = [
         '',
+        '/vip-concierge',
         '/quests',
         '/quests/new',
         '/company',
@@ -16,20 +17,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: `${baseUrl}${route}`,
         lastModified: new Date(),
         changeFrequency: 'daily' as const,
-        priority: route === '' ? 1.0 : 0.8,
+        priority: route === '' || route === '/vip-concierge' ? 1.0 : 0.8,
     }));
 
-    // 블로그 페이지 (추가 예정)
+    // 블로그 페이지 (SEO 트래픽 유입용)
     const blogPosts = [
-        '/blog/book-seoul-restaurants',
-        '/blog/authentic-korean-experiences',
-        '/blog/korean-shopping-guide',
-        '/blog/seoul-nightlife-guide',
+        '/blog/korea-travel-guide',
+        '/kpop-tour',
+        '/blog/best-korean-bbq-seoul',
+        '/blog/kpop-tour-experience',
+        '/blog/seoul-shopping-guide',
+        '/blog/korean-street-food',
+        '/blog/busan-travel-guide',
+        '/blog/jeju-island-tips',
     ].map((post) => ({
         url: `${baseUrl}${post}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
-        priority: 0.7,
+        priority: post === '/kpop-tour' ? 0.9 : 0.8,
     }));
 
     // 위치 페이지

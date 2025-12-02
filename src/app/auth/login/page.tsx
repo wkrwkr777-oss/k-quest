@@ -36,7 +36,7 @@ export default function LoginPage() {
 
     // 소셜 로그인 (준비 중)
     const handleSocialLogin = (provider: string) => {
-        addToast(`${provider} login coming soon. Use demo accounts: traveler@demo.com or local@demo.com`, 'info')
+        addToast(`${provider} login coming soon.`, 'info')
     }
 
     return (
@@ -124,14 +124,7 @@ export default function LoginPage() {
                         </p>
                     </div>
 
-                    {/* 데모 계정 안내 */}
-                    <div className="mt-8 p-4 bg-[#1A1A1A] border border-[#D4AF37]">
-                        <p className="text-[#D4AF37] text-sm font-semibold mb-2">💡 Demo Accounts</p>
-                        <p className="text-gray-400 text-xs mb-1">Traveler: <span className="text-white">traveler@demo.com</span></p>
-                        <p className="text-gray-400 text-xs mb-1">Local Expert: <span className="text-white">local@demo.com</span></p>
-                        <p className="text-gray-400 text-xs">Admin: <span className="text-white">admin</span></p>
-                        <p className="text-gray-500 text-xs mt-2 italic">No password needed</p>
-                    </div>
+
                 </div>
             </div>
         </main>

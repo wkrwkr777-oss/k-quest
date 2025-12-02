@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Premium Hermès Gold Gradient - Exact color from user's favorite -->
+    <linearGradient id="luxury-gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F4E5C3;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C9A961;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Subtle Gold Shimmer -->
+    <linearGradient id="gold-shimmer" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F4E5C3;stop-opacity:0.95" />
+      <stop offset="50%" style="stop-color:#E5D3A6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Pure Black Background -->
+  <rect width="1200" height="1200" fill="#000000"/>
+  
+  <!-- K-QUEST Wordmark - Professional Typography -->
+  <g id="kquest-trademark-wordmark" transform="translate(600, 600)">
+    
+    <!-- Main Wordmark Text -->
+    <text 
+      x="0" 
+      y="0" 
+      font-family="'Helvetica Neue', 'Futura', 'Avenir Next', 'Arial', sans-serif" 
+      font-size="110" 
+      font-weight="600" 
+      letter-spacing="16" 
+      text-anchor="middle" 
+      dominant-baseline="middle"
+      fill="url(#luxury-gold-gradient)">K-QUEST</text>
+    
+    <!-- Elegant Underline Accent -->
+    <rect 
+      x="-260" 
+      y="75" 
+      width="520" 
+      height="1.5" 
+      fill="url(#gold-shimmer)" 
+      opacity="0.35"
+      rx="0.75"/>
+    
+  </g>
+  
+</svg>

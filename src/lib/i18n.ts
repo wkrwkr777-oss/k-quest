@@ -1,4 +1,4 @@
-export type Language = 'en' | 'ko';
+export type Language = 'en' | 'ko' | 'ja' | 'zh' | 'ar';
 
 export const translations = {
     en: {
@@ -19,23 +19,45 @@ export const translations = {
             settle: "Settle Revenue",
         },
         nav: {
-            collection: "Collection",
+            collection: "Quests",
             about: "About",
             portfolio: "Wallet",
             signIn: "Sign In",
             postQuest: "Post a Quest",
         },
         hero: {
-            subtitle: "The Premium Global Concierge",
-            title: "Experience True Korea",
-            description: "Connect with local experts for exclusive tasks and experiences. From hidden gems to VIP services, K-Quest elevates your journey.",
-            explore: "Explore Collection",
-            philosophy: "Our Philosophy",
+            subtitle: "Global Quest Platform",
+            title: "Connect via",
+            titleHighlight: "Daily Quests",
+            description: "Simple tasks, global connections. Experience the healthy quest culture of Korea.\nConnect with people, solve problems, and share experiences.",
+            requestService: "Start a Quest",
+            exploreCollection: "Browse Quests",
+        },
+        features: {
+            curated: {
+                title: "Simple & Easy",
+                desc: "Anyone can easily request help or solve quests in their daily life."
+            },
+            escrow: {
+                title: "Safe Connection",
+                desc: "We ensure a secure environment for everyone to interact and transact."
+            },
+            global: {
+                title: "Global Culture",
+                desc: "Experience Korea through the eyes of locals, one quest at a time."
+            }
+        },
+        philosophy: {
+            label: "Our Vision",
+            title: "Simple is",
+            titleHighlight: "Best",
+            desc: "We believe in the power of simple connections. K-Quest builds a healthy culture where small daily tasks bridge the gap between people across the globe.",
+            readMore: "Our Story"
         },
         quest: {
-            title: "Curated Quests",
-            subtitle: "The Collection",
-            description: "Discover exclusive opportunities and premium services tailored to your needs.",
+            title: "Daily Quests",
+            subtitle: "Explore",
+            description: "Find simple tasks and meaningful connections.",
             reward: "Reward",
             location: "Location",
             time: "Time",
@@ -47,17 +69,17 @@ export const translations = {
             financialBreakdown: "Financial Breakdown",
             performerEarnings: "Performer Earnings",
             platformFee: "Platform Fee",
-            safety: "Verified Request. This task is protected by K-Quest Secure Escrow. Payment is guaranteed upon successful completion.",
+            safety: "Verified Request. Protected by K-Quest Safe Pay.",
         },
         wallet: {
-            title: "Financial Overview",
-            subtitle: "My Portfolio",
+            title: "My Wallet",
+            subtitle: "Overview",
             totalBalance: "Total Balance",
-            availableWithdrawal: "Available for Withdrawal",
+            availableWithdrawal: "Available",
             adminAccess: "Admin Access",
             platformRevenue: "Platform Revenue",
-            transactionHistory: "Transaction History",
-            export: "Export Data",
+            transactionHistory: "History",
+            export: "Export",
             table: {
                 date: "Date",
                 type: "Type",
@@ -66,127 +88,71 @@ export const translations = {
                 status: "Status"
             },
             transactions: [
-                { id: 1, type: "Deposit", title: "Quest Completed: Hongdae Guide", amount: "+ $15.00", date: "OCT 25, 2023", status: "Completed" },
-                { id: 2, type: "Deposit", title: "Quest Completed: Haeundae Photo", amount: "+ $5.00", date: "OCT 24, 2023", status: "Completed" },
-                { id: 3, type: "Withdrawal", title: "Transfer to Bank Account", amount: "- $10.00", date: "OCT 20, 2023", status: "Processing" }
+                { id: 1, type: "Deposit", title: "Quest: Hongdae Guide", amount: "+ $15.00", date: "OCT 25, 2023", status: "Completed" },
+                { id: 2, type: "Deposit", title: "Quest: Haeundae Photo", amount: "+ $5.00", date: "OCT 24, 2023", status: "Completed" },
+                { id: 3, type: "Withdrawal", title: "Bank Transfer", amount: "- $10.00", date: "OCT 20, 2023", status: "Processing" }
             ]
         },
         auth: {
-            loginTitle: "Select Access Mode",
-            foreigner: "Global Traveler",
-            local: "Korean Expert",
-            loginSuccess: "Welcome back,",
+            loginTitle: "Welcome to K-Quest",
+            foreigner: "Global User",
+            local: "Local Expert",
+            loginSuccess: "Welcome,",
             logout: "Sign Out",
         },
         toast: {
             langSwitched: "Language switched to English",
-            loginForeigner: "Logged in as Global Traveler",
-            loginLocal: "Logged in as Korean Expert",
-            questPosted: "Quest submitted successfully",
+            loginForeigner: "Logged in as Global User",
+            loginLocal: "Logged in as Local Expert",
+            questPosted: "Quest posted successfully",
         },
         ai: {
-            title: "K-Quest Assistant",
-            subtitle: "24/7 Automated Support",
-            placeholder: "Ask for help...",
-            welcome: "Hello! I am the K-Quest automated assistant. How can I help you today?",
+            title: "K-Quest Helper",
+            subtitle: "Automated Support",
+            placeholder: "How can we help?",
+            welcome: "Hi! I'm the K-Quest helper. How can I assist you?",
             responses: [
                 "I can help you find a quest.",
-                "Please check the quest details page.",
-                "You can contact support via email.",
-                "Payment is secured by our platform.",
-                "Please avoid sharing personal contact info."
+                "Check the quest details.",
+                "Contact support for help.",
+                "Payments are secure.",
+                "Keep personal info private."
             ]
         },
         filters: {
-            all: "All Categories",
-            dining: "Dining",
-            transport: "Transport",
-            mapTitle: "Interactive Map",
-            mapDesc: "Explore quests by location. Hover over pins to preview details."
+            all: "All",
+            dining: "Food",
+            transport: "Travel",
+            mapTitle: "Quest Map",
+            mapDesc: "Find quests near you."
         },
         data: {
-            quests: [
-                {
-                    id: "1",
-                    title: "Seoul Hongdae Food Guide Video",
-                    description: "I'm looking for a local's favorite restaurant near Hongdae. Please film a short video of the atmosphere and menu.",
-                    reward: "$15.00",
-                    location: "Seoul, Hongdae",
-                    time: "30 mins",
-                    difficulty: "Easy",
-                    category: "Food",
-                    requester: "Sarah J."
-                },
-                {
-                    id: "2",
-                    title: "Current Weather Photo in Haeundae",
-                    description: "I'm curious about the current sea conditions in Haeundae. Please send 3 photos showing the waves and people's attire.",
-                    reward: "$5.00",
-                    location: "Busan, Haeundae",
-                    time: "10 mins",
-                    difficulty: "Easy",
-                    category: "Lifestyle",
-                    requester: "Mike T."
-                },
-                {
-                    id: "3",
-                    title: "Gangnam Station Underground Guide",
-                    description: "Please film a video guide from Gangnam Station Exit 10 to the clothing store area in the underground shopping center.",
-                    reward: "$10.00",
-                    location: "Seoul, Gangnam",
-                    time: "20 mins",
-                    difficulty: "Medium",
-                    category: "Guide",
-                    requester: "Emily R."
-                },
-                {
-                    id: "4",
-                    title: "Convenience Store Snack Review",
-                    description: "Please buy and taste the new 'Spicy Shrimp Crackers' from a Korean convenience store and describe the taste.",
-                    reward: "$8.00",
-                    location: "Anywhere",
-                    time: "15 mins",
-                    difficulty: "Easy",
-                    category: "Food",
-                    requester: "Tom H."
-                },
-                {
-                    id: "5",
-                    title: "Gyeongbokgung Night Ticket Booking",
-                    description: "Please book 2 tickets for Gyeongbokgung Night Opening next Friday and send the QR code.",
-                    reward: "$20.00",
-                    location: "Online",
-                    time: "1 hour",
-                    difficulty: "Hard",
-                    category: "Service",
-                    requester: "Jessica K."
-                }
-            ]
+            quests: []
         },
         demo: {
             quest: {
-                title: "Exclusive Dining Reservation in Hongdae",
-                description: "I need a reservation for 2 people at a high-end Omakase in Hongdae. The place is very popular and requires a Korean phone number to book. I also need recommendations for a nearby wine bar.",
-                location: "Mapo-gu, Seoul",
-                time: "Concierge Service",
+                title: "Local Restaurant Reservation",
+                description: "I need help booking a table at a popular BBQ place in Hongdae. They only speak Korean.",
+                location: "Seoul, Mapo-gu",
+                time: "Service",
                 category: "Dining",
             },
             reviews: [
                 {
-                    comment: "Absolutely fantastic service. The reservation was secured within minutes.",
-                    role: "Global Traveler"
+                    comment: "Simple and fast. Thanks for the help!",
+                    role: "Global User"
                 },
                 {
-                    comment: "Clear instructions and prompt payment. A pleasure to work with.",
-                    role: "Korean Expert"
+                    comment: "Happy to help a traveler enjoy good food.",
+                    role: "Local Expert"
                 }
             ]
         },
         footer: {
             rights: "All rights reserved.",
-            privacy: "Privacy Policy",
-            terms: "Terms of Service",
-            company: "Potentaro (Jeong Yeon-ju)"
+            privacy: "Privacy",
+            terms: "Terms",
+            company: "Potentaro"
         }
     },
     ko: {
@@ -207,45 +173,67 @@ export const translations = {
             settle: "수익 정산",
         },
         nav: {
-            collection: "컬렉션",
+            collection: "퀘스트 둘러보기",
             about: "소개",
-            portfolio: "지갑",
+            portfolio: "내 지갑",
             signIn: "로그인",
             postQuest: "퀘스트 등록",
         },
         hero: {
-            subtitle: "프리미엄 글로벌 컨시어지",
-            title: "진정한 한국을 경험하세요",
-            description: "현지 전문가와 연결되어 특별한 경험을 만드세요. 숨겨진 명소부터 VIP 서비스까지, K-Quest가 당신의 여정을 품격 있게 만듭니다.",
-            explore: "컬렉션 탐색",
-            philosophy: "서비스 철학",
+            subtitle: "글로벌 퀘스트 플랫폼",
+            title: "일상의 퀘스트로",
+            titleHighlight: "세상을 잇다",
+            description: "쉽고 간단하지만, 건강한 퀘스트 문화.\n한국의 새로운 퀘스트 문화를 통해 전 세계 사람들과 연결되세요.",
+            requestService: "퀘스트 시작하기",
+            exploreCollection: "퀘스트 찾아보기",
+        },
+        features: {
+            curated: {
+                title: "쉽고 간단하게",
+                desc: "누구나 일상 속에서 도움을 요청하고, 퀘스트를 수행할 수 있습니다."
+            },
+            escrow: {
+                title: "안전한 연결",
+                desc: "서로 신뢰할 수 있는 안전한 환경에서 퀘스트를 주고받으세요."
+            },
+            global: {
+                title: "글로벌 문화",
+                desc: "퀘스트를 통해 한국의 건강한 문화를 전 세계와 나눕니다."
+            }
+        },
+        philosophy: {
+            label: "우리의 비전",
+            title: "Simple is",
+            titleHighlight: "Best",
+            desc: "우리는 단순함의 힘을 믿습니다. K-Quest는 거창한 것이 아닌, 일상의 사소한 도움과 교류가 모여 만드는 건강한 퀘스트 문화를 지향합니다.",
+            readMore: "우리의 이야기"
         },
         quest: {
-            title: "엄선된 퀘스트",
-            subtitle: "더 컬렉션",
-            description: "당신의 니즈에 맞춘 독점적인 기회와 프리미엄 서비스를 발견하세요.",
-            reward: "보상금",
+            title: "오늘의 퀘스트",
+            subtitle: "둘러보기",
+            description: "일상의 소소한 퀘스트들을 발견해보세요.",
+            reward: "보상",
             location: "위치",
-            time: "소요시간",
+            time: "시간",
             difficulty: "난이도",
             category: "카테고리",
             requester: "요청자",
-            totalReward: "총 보상금",
-            requestDetails: "요청 상세",
-            financialBreakdown: "수익 분석",
-            performerEarnings: "수행자 수익",
-            platformFee: "플랫폼 수수료",
-            safety: "검증된 요청입니다. 이 태스크는 K-Quest 안전 에스크로에 의해 보호됩니다. 완료 시 지급이 보장됩니다.",
+            totalReward: "총 보상",
+            requestDetails: "요청 내용",
+            financialBreakdown: "정산 내역",
+            performerEarnings: "수익금",
+            platformFee: "수수료",
+            safety: "안전 결제로 보호되는 퀘스트입니다.",
         },
         wallet: {
-            title: "재무 현황",
-            subtitle: "내 포트폴리오",
+            title: "내 지갑",
+            subtitle: "현황",
             totalBalance: "총 잔액",
-            availableWithdrawal: "출금 가능 금액",
-            adminAccess: "관리자 접근",
+            availableWithdrawal: "출금 가능",
+            adminAccess: "관리자",
             platformRevenue: "플랫폼 수익",
-            transactionHistory: "거래 내역",
-            export: "데이터 내보내기",
+            transactionHistory: "내역",
+            export: "내보내기",
             table: {
                 date: "날짜",
                 type: "유형",
@@ -254,127 +242,119 @@ export const translations = {
                 status: "상태"
             },
             transactions: [
-                { id: 1, type: "입금", title: "퀘스트 완료: 홍대 가이드", amount: "+ $15.00", date: "2023. 10. 25", status: "완료됨" },
-                { id: 2, type: "입금", title: "퀘스트 완료: 해운대 사진", amount: "+ $5.00", date: "2023. 10. 24", status: "완료됨" },
-                { id: 3, type: "출금", title: "은행 계좌로 이체", amount: "- $10.00", date: "2023. 10. 20", status: "처리중" }
+                { id: 1, type: "입금", title: "퀘스트: 홍대 맛집 추천", amount: "+ $15.00", date: "2023. 10. 25", status: "완료" },
+                { id: 2, type: "입금", title: "퀘스트: 날씨 사진", amount: "+ $5.00", date: "2023. 10. 24", status: "완료" },
+                { id: 3, type: "출금", title: "계좌 이체", amount: "- $10.00", date: "2023. 10. 20", status: "처리중" }
             ]
         },
         auth: {
-            loginTitle: "접속 모드 선택",
-            foreigner: "글로벌 여행자",
-            local: "한국 현지 전문가",
-            loginSuccess: "환영합니다,",
+            loginTitle: "K-Quest 시작하기",
+            foreigner: "글로벌 유저",
+            local: "현지 유저",
+            loginSuccess: "반갑습니다,",
             logout: "로그아웃",
         },
         toast: {
             langSwitched: "언어가 한국어로 변경되었습니다",
-            loginForeigner: "글로벌 여행자로 로그인되었습니다",
-            loginLocal: "한국 현지 전문가로 로그인되었습니다",
-            questPosted: "퀘스트가 성공적으로 등록되었습니다",
+            loginForeigner: "글로벌 유저로 로그인되었습니다",
+            loginLocal: "현지 유저로 로그인되었습니다",
+            questPosted: "퀘스트가 등록되었습니다",
         },
         ai: {
             title: "K-Quest 도우미",
-            subtitle: "24시간 자동 응답",
+            subtitle: "자동 응답",
             placeholder: "무엇을 도와드릴까요?",
-            welcome: "안녕하세요! K-Quest 자동 응답 도우미입니다. 무엇을 도와드릴까요?",
+            welcome: "안녕하세요! K-Quest 도우미입니다. 궁금한 점이 있으신가요?",
             responses: [
-                "퀘스트 찾기를 도와드릴 수 있습니다.",
-                "퀘스트 상세 페이지를 확인해주세요.",
-                "이메일로 문의하실 수 있습니다.",
-                "결제는 안전하게 보호됩니다.",
-                "개인 연락처 공유는 자제해주세요."
+                "퀘스트 찾기를 도와드릴까요?",
+                "상세 내용을 확인해보세요.",
+                "고객센터에 문의하실 수 있어요.",
+                "결제는 안전합니다.",
+                "개인정보는 소중히 다뤄주세요."
             ]
         },
         filters: {
-            all: "전체 카테고리",
-            dining: "다이닝",
-            transport: "교통",
-            mapTitle: "인터랙티브 맵",
-            mapDesc: "위치별로 퀘스트를 탐색하세요. 핀 위에 마우스를 올리면 상세 내용을 볼 수 있습니다."
+            all: "전체",
+            dining: "음식",
+            transport: "이동",
+            mapTitle: "지도 보기",
+            mapDesc: "내 주변 퀘스트를 찾아보세요."
         },
         data: {
-            quests: [
-                {
-                    id: "1",
-                    title: "서울 홍대 맛집 추천 영상 찍어주세요",
-                    description: "홍대 근처에서 현지인들이 자주 가는 맛집을 찾고 있습니다. 식당 분위기와 메뉴판, 그리고 음식 영상을 짧게 찍어서 보내주세요.",
-                    reward: "$15.00",
-                    location: "서울 마포구 홍대",
-                    time: "30분",
-                    difficulty: "쉬움",
-                    category: "음식",
-                    requester: "Sarah J."
-                },
-                {
-                    id: "2",
-                    title: "부산 해운대 현재 날씨 사진",
-                    description: "지금 해운대 바다 상황이 궁금합니다. 파도 높이와 사람들의 옷차림을 알 수 있는 사진 3장을 부탁드려요.",
-                    reward: "$5.00",
-                    location: "부산 해운대",
-                    time: "10분",
-                    difficulty: "쉬움",
-                    category: "라이프스타일",
-                    requester: "Mike T."
-                },
-                {
-                    id: "3",
-                    title: "강남역 지하상가 가는 길 안내",
-                    description: "강남역 10번 출구에서 지하상가 옷가게 구역까지 가는 길을 동영상으로 찍어주세요. 헷갈리지 않게 천천히 걸어가며 촬영 부탁드립니다.",
-                    reward: "$10.00",
-                    location: "서울 강남",
-                    time: "20분",
-                    difficulty: "보통",
-                    category: "가이드",
-                    requester: "Emily R."
-                },
-                {
-                    id: "4",
-                    title: "편의점 신상 과자 리뷰",
-                    description: "한국 편의점에 새로 나온 '매운 새우깡'을 사서 먹어보고 맛을 설명해주세요. 영수증 인증 필수입니다.",
-                    reward: "$8.00",
-                    location: "어디서나",
-                    time: "15분",
-                    difficulty: "쉬움",
-                    category: "음식",
-                    requester: "Tom H."
-                },
-                {
-                    id: "5",
-                    title: "경복궁 야간 개장 티켓 구매 대행",
-                    description: "다음 주 금요일 경복궁 야간 개장 티켓 2장을 대신 예매해서 QR코드를 보내주세요. 티켓 비용은 별도 지급합니다.",
-                    reward: "$20.00",
-                    location: "온라인",
-                    time: "1시간",
-                    difficulty: "어려움",
-                    category: "서비스",
-                    requester: "Jessica K."
-                }
-            ]
+            quests: []
         },
         demo: {
             quest: {
-                title: "홍대 프리미엄 오마카세 예약",
-                description: "홍대에 있는 고급 오마카세 식당 2인 예약이 필요합니다. 인기가 많은 곳이라 한국 전화번호로 예약해야 합니다. 근처 와인바 추천도 부탁드립니다.",
+                title: "식당 예약 도와주세요",
+                description: "홍대에 있는 고깃집을 예약하고 싶은데 한국말을 못해요. 대신 전화 예약 좀 부탁드립니다.",
                 location: "서울 마포구",
-                time: "컨시어지 서비스",
-                category: "다이닝",
+                time: "서비스",
+                category: "음식",
             },
             reviews: [
                 {
-                    comment: "정말 환상적인 서비스였습니다. 몇 분 만에 예약이 확정되었습니다.",
-                    role: "글로벌 여행자"
+                    comment: "빠르고 친절하게 도와주셔서 감사합니다!",
+                    role: "글로벌 유저"
                 },
                 {
-                    comment: "지시 사항이 명확하고 입금도 빨랐습니다. 함께 일해서 즐거웠습니다.",
-                    role: "한국 현지 전문가"
+                    comment: "맛있는 식사 되세요! 도움이 되어 기쁩니다.",
+                    role: "현지 유저"
                 }
             ]
         },
         footer: {
             rights: "All rights reserved.",
-            privacy: "개인정보 처리방침",
+            privacy: "개인정보처리방침",
             terms: "이용약관",
-            company: "Potentaro (정연주)"
+            company: "Potentaro"
         }
+    },
+    ja: {
+        common: { welcome: "ようこそ", search: "検索", loading: "読み込み中...", error: "エラー", success: "成功", confirm: "確認", cancel: "キャンセル", back: "戻る", viewDetails: "詳細を見る", accept: "受け入れる", share: "共有", manage: "管理", withdraw: "出金", settle: "収益精算" },
+        nav: { collection: "クエスト", about: "会社紹介", portfolio: "ウォレット", signIn: "ログイン", postQuest: "クエスト登録" },
+        hero: { subtitle: "グローバルクエストプラットフォーム", title: "日常のクエストで", titleHighlight: "世界を繋ぐ", description: "シンプルなタスク、グローバルな繋がり。韓国の健康的なクエスト文化を体験してください。", requestService: "クエストを開始", exploreCollection: "クエストを見る" },
+        features: { curated: { title: "シンプル＆簡単", desc: "誰でも簡単に日常のタスクを依頼したり実行できます。" }, escrow: { title: "安全な接続", desc: "安全な環境で取引できます。" }, global: { title: "グローバル文化", desc: "クエストを通じて韓国を体験してください。" } },
+        philosophy: { label: "私たちのビジョン", title: "Simple is", titleHighlight: "Best", desc: "シンプルな繋がりの力を信じています。", readMore: "私たちの物語" },
+        quest: { title: "今日のクエスト", subtitle: "探索", description: "シンプルなタスクと意味のある繋がりを見つけてください。", reward: "報酬", location: "場所", time: "時間", difficulty: "難易度", category: "カテゴリー", requester: "依頼者", totalReward: "総報酬", requestDetails: "依頼内容", financialBreakdown: "財務内訳", performerEarnings: "実行者収益", platformFee: "プラットフォーム手数料", safety: "K-Quest安全決済で保護されています。" },
+        wallet: { title: "マイウォレット", subtitle: "概要", totalBalance: "総残高", availableWithdrawal: "出金可能", adminAccess: "管理者", platformRevenue: "プラットフォーム収益", transactionHistory: "履歴", export: "エクスポート", table: { date: "日付", type: "タイプ", description: "説明", amount: "金額", status: "ステータス" }, transactions: [] },
+        auth: { loginTitle: "K-Questへようこそ", foreigner: "グローバルユーザー", local: "現地エキスパート", loginSuccess: "ようこそ、", logout: "ログアウト" },
+        toast: { langSwitched: "言語が日本語に変更されました", loginForeigner: "グローバルユーザーとしてログイン", loginLocal: "現地エキスパートとしてログイン", questPosted: "クエストが投稿されました" },
+        ai: { title: "K-Questヘルパー", subtitle: "自動サポート", placeholder: "どのようにお手伝いできますか？", welcome: "こんにちは！K-Questヘルパーです。", responses: [] },
+        filters: { all: "全て", dining: "食べ物", transport: "交通", mapTitle: "クエストマップ", mapDesc: "近くのクエストを見つける。" },
+        data: { quests: [] },
+        demo: { quest: { title: "レストラン予約", description: "弘大の人気焼肉店を予約したいです。韓国語のみです。", location: "ソウル、麻浦区", time: "サービス", category: "飲食" }, reviews: [] },
+        footer: { rights: "All rights reserved.", privacy: "プライバシーポリシー", terms: "利用規約", company: "Potentaro" }
+    },
+    zh: {
+        common: { welcome: "欢迎", search: "搜索", loading: "加载中...", error: "错误", success: "成功", confirm: "确认", cancel: "取消", back: "返回", viewDetails: "查看详情", accept: "接受", share: "分享", manage: "管理", withdraw: "提款", settle: "结算收益" },
+        nav: { collection: "任务", about: "关于我们", portfolio: "钱包", signIn: "登录", postQuest: "发布任务" },
+        hero: { subtitle: "全球任务平台", title: "通过日常任务", titleHighlight: "连接世界", description: "简单的任务，全球的联系。体验韩国健康的任务文化。", requestService: "开始任务", exploreCollection: "浏览任务" },
+        features: { curated: { title: "简单易用", desc: "任何人都可以轻松请求帮助或完成任务。" }, escrow: { title: "安全连接", desc: "在安全的环境中进行交易。" }, global: { title: "全球文化", desc: "通过任务体验韩国。" } },
+        philosophy: { label: "我们的愿景", title: "Simple is", titleHighlight: "Best", desc: "我们相信简单连接的力量。", readMore: "我们的故事" },
+        quest: { title: "今日任务", subtitle: "探索", description: "寻找简单的任务和有意义的联系。", reward: "奖励", location: "位置", time: "时间", difficulty: "难度", category: "类别", requester: "委托人", totalReward: "总奖励", requestDetails: "请求详情", financialBreakdown: "财务明细", performerEarnings: "执行者收益", platformFee: "平台费用", safety: "受K-Quest安全支付保护。" },
+        wallet: { title: "我的钱包", subtitle: "概览", totalBalance: "总余额", availableWithdrawal: "可提款", adminAccess: "管理员", platformRevenue: "平台收益", transactionHistory: "历史记录", export: "导出", table: { date: "日期", type: "类型", description: "描述", amount: "金额", status: "状态" }, transactions: [] },
+        auth: { loginTitle: "欢迎来到K-Quest", foreigner: "全球用户", local: "本地专家", loginSuccess: "欢迎，", logout: "登出" },
+        toast: { langSwitched: "语言已切换为中文", loginForeigner: "作为全球用户登录", loginLocal: "作为本地专家登录", questPosted: "任务已发布" },
+        ai: { title: "K-Quest助手", subtitle: "自动支持", placeholder: "我能帮您什么？", welcome: "你好！我是K-Quest助手。", responses: [] },
+        filters: { all: "全部", dining: "美食", transport: "交通", mapTitle: "任务地图", mapDesc: "寻找附近的任务。" },
+        data: { quests: [] },
+        demo: { quest: { title: "餐厅预订", description: "我想预订弘大的烤肉店。只有韩语。", location: "首尔，麻浦区", time: "服务", category: "餐饮" }, reviews: [] },
+        footer: { rights: "All rights reserved.", privacy: "隐私政策", terms: "使用条款", company: "Potentaro" }
+    },
+    ar: {
+        common: { welcome: "مرحباً", search: "بحث", loading: "جار التحميل...", error: "خطأ", success: "نجاح", confirm: "تأكيد", cancel: "إلغاء", back: "رجوع", viewDetails: "عرض التفاصيل", accept: "قبول", share: "مشاركة", manage: "إدارة", withdraw: "سحب", settle: "تسوية الإيرادات" },
+        nav: { collection: "المهام", about: "عن الشركة", portfolio: "المحفظة", signIn: "تسجيل الدخول", postQuest: "نشر مهمة" },
+        hero: { subtitle: "منصة مهام عالمية", title: "التواصل عبر", titleHighlight: "المهام اليومية", description: "مهام بسيطة، روابط عالمية. جرب ثقافة المهام الصحية في كوریا.", requestService: "ابدأ المهمة", exploreCollection: "تصفح المهام" },
+        features: { curated: { title: "بسيط وسهل", desc: "يمكن لأي شخص طلب المساعدة أو إكمال المهام بسهولة." }, escrow: { title: "اتصال آمن", desc: "معاملات آمنة في بيئة موثوقة." }, global: { title: "ثقافة عالمية", desc: "اختبر كوريا من خلال المهام." } },
+        philosophy: { label: "رؤيتنا", title: "Simple is", titleHighlight: "Best", desc: "نؤمن بقوة الاتصالات البسيطة.", readMore: "قصتنا" },
+        quest: { title: "مهام اليوم", subtitle: "استكشاف", description: "اعثر على مهام بسيطة واتصالات ذات مغزى.", reward: "مكافأة", location: "موقع", time: "وقت", difficulty: "صعوبة", category: "فئة", requester: "الطالب", totalReward: "إجمالي المكافأة", requestDetails: "تفاصيل الطلب", financialBreakdown: "التفصيل المالي", performerEarnings: "أرباح المنفذ", platformFee: "رسوم المنصة", safety: "محمي بواسطة K-Quest الدفع الآمن." },
+        wallet: { title: "محفظتي", subtitle: "نظرة عامة", totalBalance: "الرصيد الإجمالي", availableWithdrawal: "متاح للسحب", adminAccess: "وصول المسؤول", platformRevenue: "إيرادات المنصة", transactionHistory: "السجل", export: "تصدير", table: { date: "التاريخ", type: "النوع", description: "الوصف", amount: "المبلغ", status: "الحالة" }, transactions: [] },
+        auth: { loginTitle: "مرحباً بك في K-Quest", foreigner: "مستخدم عالمي", local: "خبير محلي", loginSuccess: "مرحباً،", logout: "تسجيل الخروج" },
+        toast: { langSwitched: "تم تبديل اللغة إلى العربية", loginForeigner: "تم تسجيل الدخول كمستخدم عالمي", loginLocal: "تم تسجيل الدخول كخبير محلي", questPosted: "تم نشر المهمة" },
+        ai: { title: "مساعد K-Quest", subtitle: "دعم تلقائي", placeholder: "كيف يمكنني مساعدتك؟", welcome: "مرحباً! أنا مساعد K-Quest.", responses: [] },
+        filters: { all: "الكل", dining: "طعام", transport: "نقل", mapTitle: "خريطة المهام", mapDesc: "اعثر على المهام القريبة منك." },
+        data: { quests: [] },
+        demo: { quest: { title: "حجز مطعم", description: "أريد حجز مطعم شواء في هونغداي. الكورية فقط.", location: "سيول، مابو-جو", time: "خدمة", category: "طعام" }, reviews: [] },
+        footer: { rights: "All rights reserved.", privacy: "سياسة الخصوصية", terms: "شروط الاستخدام", company: "Potentaro" }
     }
 };

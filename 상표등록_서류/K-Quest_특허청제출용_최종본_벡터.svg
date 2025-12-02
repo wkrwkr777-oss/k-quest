@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Minimal Modern Gold - Second Version Palette -->
+    <linearGradient id="minimal-gold" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" style="stop-color:#F4E5C3;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C9A961;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Subtle Silk Shimmer for Text -->
+    <linearGradient id="text-gold-minimal" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#E5D3A6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C9A961;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Clean Radial for Symbol -->
+    <radialGradient id="symbol-gold" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" style="stop-color:#F4E5C3;stop-opacity:0.9" />
+      <stop offset="60%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C9A961;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Pure Black Background -->
+  <rect width="1200" height="1200" fill="#000000"/>
+  
+  <!-- Main K-Quest Logo Group -->
+  <g id="k-quest-trademark-logo" transform="translate(600, 600)">
+    
+    <!-- Decorative Circle Background (Original Design Element) -->
+    <circle cx="0" cy="-50" r="280" fill="none" stroke="url(#minimal-gold)" stroke-width="2.5" opacity="0.25"/>
+    
+    <!-- Large Stylized K Letter - Original Shape -->
+    <g id="k-letter" fill="url(#symbol-gold)" transform="translate(0, -50)">
+      <!-- Vertical Stem of K -->
+      <rect x="-120" y="-180" width="60" height="360" rx="5"/>
+      
+      <!-- Upper Diagonal Arm -->
+      <path d="M -50,-80 L -50,-20 L 100,130 L 150,130 L 150,100 L 20,-20 L 20,-80 Z"/>
+      
+      <!-- Lower Diagonal Arm -->
+      <path d="M -50,20 L -50,80 L 20,80 L 150,-50 L 150,-80 L 100,-80 Z"/>
+      
+      <!-- Quest Arrow Element (Original Design) -->
+      <g transform="translate(120, -100)">
+        <path d="M 0,0 L 50,0 L 50,15 L 75,15 L 37.5,52.5 L 0,15 L 25,15 Z" 
+              fill="url(#minimal-gold)" opacity="0.9"/>
+      </g>
+    </g>
+    
+    <!-- Horizontal Divider Line (Original Design) -->
+    <line x1="-200" y1="180" x2="200" y2="180" 
+          stroke="url(#minimal-gold)" 
+          stroke-width="2" 
+          opacity="0.35"/>
+    
+    <!-- K-QUEST Text (Original Typography) -->
+    <g id="wordmark" transform="translate(0, 270)">
+      <text x="0" y="0" 
+            font-family="'Montserrat', 'Futura', 'Helvetica Neue', 'Arial', sans-serif" 
+            font-size="75" 
+            font-weight="600" 
+            letter-spacing="18" 
+            text-anchor="middle" 
+            fill="url(#text-gold-minimal)">K-QUEST</text>
+    </g>
+    
+    <!-- Subtitle (Original Design Element) -->
+    <text x="0" y="330" 
+          font-family="'Montserrat', 'Helvetica Neue', sans-serif" 
+          font-size="22" 
+          font-weight="300" 
+          letter-spacing="8" 
+          text-anchor="middle" 
+          fill="url(#minimal-gold)" 
+          opacity="0.6">CULTURAL BRIDGE</text>
+    
+    <!-- Corner Accents (Original Decorative Elements) -->
+    <g id="corner-decorations" opacity="0.25">
+      <!-- Top Left Corner -->
+      <path d="M -250,-280 L -200,-280 L -200,-270 L -240,-270 L -240,-230 L -250,-230 Z" 
+            fill="url(#minimal-gold)"/>
+      
+      <!-- Top Right Corner -->
+      <path d="M 250,-280 L 200,-280 L 200,-270 L 240,-270 L 240,-230 L 250,-230 Z" 
+            fill="url(#minimal-gold)"/>
+      
+      <!-- Bottom Left Corner -->
+      <path d="M -250,350 L -200,350 L -200,340 L -240,340 L -240,300 L -250,300 Z" 
+            fill="url(#minimal-gold)"/>
+      
+      <!-- Bottom Right Corner -->
+      <path d="M 250,350 L 200,350 L 200,340 L 240,340 L 240,300 L 250,300 Z" 
+            fill="url(#minimal-gold)"/>
+    </g>
+    
+  </g>
+  
+</svg>

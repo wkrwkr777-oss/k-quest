@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Black Background -->
+  <rect width="100%" height="100%" fill="#000000" />
+  
+  <!-- Text: White, Sharp, Italic for broad protection -->
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" 
+        font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" 
+        font-weight="bold" 
+        font-style="italic"
+        font-size="190" 
+        fill="#FFFFFF" 
+        letter-spacing="2">
+    K-QUEST
+  </text>
+</svg>

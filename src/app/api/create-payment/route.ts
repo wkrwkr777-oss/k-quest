@@ -26,9 +26,12 @@ export async function POST(req: NextRequest) {
     try {
         const { questId, amount } = await req.json()
 
-        // 30% 수수료 계산
-        const platformFee = amount * 0.30
-        const performerEarning = amount * 0.70
+        // 수익 분배 계산 (수행자 70%, 플랫폼 30%)
+        const PLATFORM_FEE_RATE = 0.30
+        const PERFORMER_EARNING_RATE = 0.70
+
+        const platformFee = amount * PLATFORM_FEE_RATE
+        const performerEarning = amount * PERFORMER_EARNING_RATE
 
         const accessToken = await getPayPalAccessToken()
 

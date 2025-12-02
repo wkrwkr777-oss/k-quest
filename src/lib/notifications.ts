@@ -26,7 +26,9 @@ export type NotificationType =
     | 'warning'
     | 'ban'
     | 'quest_approved'
-    | 'quest_rejected';
+    | 'quest_rejected'
+    | 'info'
+    | 'success';
 
 /**
  * 알림 생성
@@ -154,7 +156,7 @@ export function subscribeToNotifications(
                 table: 'notifications',
                 filter: `user_id=eq.${userId}`,
             },
-            (payload) => {
+            (payload: { new: { [key: string]: any } }) => {
                 callback(payload.new as Notification);
             }
         )

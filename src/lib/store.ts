@@ -37,6 +37,7 @@ interface AppState {
 
     // Quests (Mock)
     userQuests: any[];
+    fetchQuests: () => Promise<void>;
     addQuest: (quest: any) => void;
 
     // Application System
@@ -70,43 +71,10 @@ export const useStore = create<AppState>((set, get) => ({
     userEmail: null,
 
     login: async (email, password) => {
-        // Admin Backdoor for Demo
-        if (email === 'admin@kquest.com' || email === 'admin') {
-            set({
-                user: 'local', // Admin is treated as an expert/local
-                userId: 'admin-user-id',
-                userEmail: 'admin@kquest.com',
-            });
-            get().addToast('Welcome Admin!', 'success');
-            return;
-        }
-
-        // Demo User: Foreigner
-        if (email === 'traveler@demo.com') {
-            set({
-                user: 'foreigner',
-                userId: 'demo-traveler-id',
-                userEmail: 'traveler@demo.com',
-            });
-            get().addToast('Welcome Traveler!', 'success');
-            return;
-        }
-
-        // Demo User: Local
-        if (email === 'local@demo.com') {
-            set({
-                user: 'local',
-                userId: 'demo-local-id',
-                userEmail: 'local@demo.com',
-            });
-            get().addToast('Welcome Local Expert!', 'success');
-            return;
-        }
-
         try {
-            // Supabase 유효성 체크
+            // Real Supabase Login
             if (!supabase || !supabase.auth) {
-                throw new Error('Database connection not configured. Please use demo accounts or contact support.');
+                throw new Error('Database connection not configured.');
             }
 
             const { data, error } = await supabase.auth.signInWithPassword({
@@ -133,9 +101,9 @@ export const useStore = create<AppState>((set, get) => ({
 
     signup: async (email, password, role) => {
         try {
-            // Supabase 유효성 체크
+            // Real Supabase Signup
             if (!supabase || !supabase.auth) {
-                throw new Error('Database connection not configured. Please contact support.');
+                throw new Error('Database connection not configured.');
             }
 
             const { data, error } = await supabase.auth.signUp({
@@ -184,6 +152,24 @@ export const useStore = create<AppState>((set, get) => ({
 
     // Quests
     userQuests: [],
+
+    fetchQuests: async () => {
+        try {
+            const { data, error } = await supabase
+                .from('quests')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            if (data) {
+                set({ userQuests: data });
+            }
+        } catch (error) {
+            console.error('Error fetching quests:', error);
+        }
+    },
+
     addQuest: async (quest) => {
         const userId = get().userId;
         if (!userId) {
@@ -191,39 +177,39 @@ export const useStore = create<AppState>((set, get) => ({
             return;
         }
 
-        const newQuest = {
-            ...quest,
-            id: Math.random().toString(36).substring(7),
-            requester_id: userId,
-            status: 'open',
-            created_at: new Date().toISOString(),
-        };
-        set((state) => ({ userQuests: [newQuest, ...state.userQuests] }));
-        get().addToast('Quest posted successfully!', 'success');
+        try {
+            const { data, error } = await supabase
+                .from('quests')
+                .insert([
+                    {
+                        title: quest.title,
+                        description: quest.description,
+                        reward: quest.reward,
+                        location: quest.location,
+                        time: quest.time,
+                        difficulty: quest.difficulty,
+                        category: quest.category,
+                        requester_id: userId,
+                        status: 'open'
+                    }
+                ])
+                .select();
+
+            if (error) throw error;
+
+            if (data) {
+                // 목록 새로고침
+                set((state) => ({ userQuests: [data[0], ...state.userQuests] }));
+                get().addToast('Quest posted successfully!', 'success');
+            }
+        } catch (error: any) {
+            console.error('Error posting quest:', error);
+            get().addToast(error.message || 'Failed to post quest', 'error');
+        }
     },
 
     // Application System
-    applications: [
-        // Mock Data for Demo
-        {
-            id: 'app-1',
-            questId: '1', // Matches the first mock quest
-            applicantId: 'demo-local-id',
-            applicantName: 'Kim Min-su',
-            message: 'I live in Hongdae and can visit the restaurant right now!',
-            status: 'pending',
-            createdAt: new Date().toISOString()
-        },
-        {
-            id: 'app-2',
-            questId: '1',
-            applicantId: 'another-local',
-            applicantName: 'Lee Ji-won',
-            message: 'Professional food vlogger here. I can take high quality videos.',
-            status: 'pending',
-            createdAt: new Date().toISOString()
-        }
-    ],
+    applications: [],
 
     applyForQuest: (questId, message) => {
         const userId = get().userId;

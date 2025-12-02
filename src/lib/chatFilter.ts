@@ -185,7 +185,7 @@ export function getWarningMessage(severity: string, violationType: string): stri
         },
     };
 
-    return messages[severity as keyof typeof messages]?.[violationType as keyof typeof messages.critical]
+    return (messages as any)[severity]?.[violationType]
         || '⚠️ 플랫폼 정책을 위반하는 메시지입니다.';
 }
 

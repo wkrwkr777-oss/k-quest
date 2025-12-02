@@ -8,9 +8,9 @@ export interface WithdrawalRequest {
     id: string;
     user_id: string;
     amount: number;
-    bank_name: string;
-    account_number: string;
-    account_holder: string;
+    bank_name?: string;
+    account_number?: string;
+    account_holder?: string;
     status: WithdrawalStatus;
     created_at: string;
     processed_at?: string;

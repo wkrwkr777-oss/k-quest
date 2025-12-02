@@ -1,30 +1,33 @@
-// 상세 평가 시스템 - 투명하고 정확한 평가export interface DetailedReview {
-id: string;
-quest_id: string;
-reviewer_id: string;
-reviewee_id: string;
+import { supabase } from './supabase';
 
-// 5가지 핵심 평가 항목 (각 1-5점)
-task_completion: number;        // 임무 완수도
-communication: number;           // 소통 원활성
-professionalism: number;         // 전문성 & 태도
-punctuality: number;             // 시간 약속 준수
-value_for_money: number;         // 가격 대비 만족도
+// 상세 평가 시스템 - 투명하고 정확한 평가
+export interface DetailedReview {
+    id: string;
+    quest_id: string;
+    reviewer_id: string;
+    reviewee_id: string;
 
-// 전체 평점 (자동 계산)
-overall_rating: number;
+    // 5가지 핵심 평가 항목 (각 1-5점)
+    task_completion: number;        // 임무 완수도
+    communication: number;           // 소통 원활성
+    professionalism: number;         // 전문성 & 태도
+    punctuality: number;             // 시간 약속 준수
+    value_for_money: number;         // 가격 대비 만족도
 
-// 상세 코멘트
-comment: string;
+    // 전체 평점 (자동 계산)
+    overall_rating: number;
 
-// 장점/개선점
-pros: string[];
-cons: string[];
+    // 상세 코멘트
+    comment: string;
 
-// 추천 여부
-would_recommend: boolean;
+    // 장점/개선점
+    pros: string[];
+    cons: string[];
 
-created_at: string;
+    // 추천 여부
+    would_recommend: boolean;
+
+    created_at: string;
 }
 
 /**
@@ -105,12 +108,14 @@ export async function createDetailedReview(
 async function updateUserDetailedRatings(userId: string): Promise<void> {
     try {
         // 모든 리뷰 가져오기
-        const { data: reviews } = await supabase
+        const { data } = await supabase
             .from('detailed_reviews')
             .select('*')
             .eq('reviewee_id', userId);
 
-        if (!reviews || reviews.length === 0) return;
+        if (!data || data.length === 0) return;
+
+        const reviews = data as unknown as DetailedReview[];
 
         // 각 항목 평균 계산
         const avgTaskCompletion = reviews.reduce((sum, r) => sum + r.task_completion, 0) / reviews.length;

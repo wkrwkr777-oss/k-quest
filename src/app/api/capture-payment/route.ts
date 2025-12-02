@@ -33,7 +33,7 @@ async function getPayPalAccessToken() {
 
 export async function POST(req: NextRequest) {
     try {
-        const { orderId, questId } = await req.json()
+        const { orderId, questId, payerId } = await req.json()
 
         const accessToken = await getPayPalAccessToken()
         if (!accessToken) {
@@ -59,14 +59,20 @@ export async function POST(req: NextRequest) {
 
         if (captureData.status === 'COMPLETED') {
             const amount = parseFloat(captureData.purchase_units[0].amount.value)
-            const platformFee = amount * 0.30
-            const performerEarning = amount * 0.70
+
+            // 수익 분배 계산 (수행자 70%, 플랫폼 30%)
+            const PLATFORM_FEE_RATE = 0.30
+            const PERFORMER_EARNING_RATE = 0.70
+
+            const platformFee = amount * PLATFORM_FEE_RATE
+            const performerEarning = amount * PERFORMER_EARNING_RATE
 
             // Supabase에 거래 기록 저장
             const { data: transaction, error } = await supabaseAdmin
                 .from('transactions')
                 .insert({
                     quest_id: questId,
+                    payer_id: payerId, // 결제자 ID 저장
                     amount,
                     platform_fee: platformFee,
                     performer_earning: performerEarning,

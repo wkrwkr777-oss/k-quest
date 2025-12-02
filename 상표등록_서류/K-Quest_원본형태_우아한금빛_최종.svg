@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- The Elegant Luxury Gold Gradient (User's Favorite) -->
+    <linearGradient id="elegant-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F4E5C3;stop-opacity:1" /> <!-- Luminous highlight -->
+      <stop offset="30%" style="stop-color:#E5D3A6;stop-opacity:1" /> <!-- Soft silk -->
+      <stop offset="60%" style="stop-color:#D4AF37;stop-opacity:1" /> <!-- Rich gold -->
+      <stop offset="100%" style="stop-color:#C9A961;stop-opacity:1" /> <!-- Deep warm gold -->
+    </linearGradient>
+    
+    <!-- Metallic Sheen for the Symbol -->
+    <linearGradient id="symbol-sheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF8E7;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8941F;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Pure Black Background -->
+  <rect width="1200" height="1200" fill="#000000"/>
+  
+  <!-- ORIGINAL LOGO COMPOSITION -->
+  <g transform="translate(600, 550)">
+    
+    <!-- 1. The Large Stylized 'K' Symbol (Original Shape) -->
+    <g transform="translate(0, -50)">
+       <!-- Vertical Stem -->
+       <path d="M -100,-150 L -60,-150 L -60,150 L -100,150 Z" fill="url(#elegant-gold)" />
+       
+       <!-- Upper Arm -->
+       <path d="M -60,-20 L 80,-150 L 130,-150 L -20,-10 Z" fill="url(#symbol-sheen)" />
+       
+       <!-- Lower Arm (The Quest Path) -->
+       <path d="M -20,10 L 130,150 L 80,150 L -60,20 Z" fill="url(#symbol-sheen)" />
+       
+       <!-- The "Quest Arrow" Accent (Integrated) -->
+       <path d="M 90,-100 L 140,-100 L 115,-75 Z" fill="url(#elegant-gold)" opacity="0.9"/>
+    </g>
+
+    <!-- 2. The 'K-QUEST' Wordmark (Original Position) -->
+    <text x="0" y="250" 
+          font-family="'Times New Roman', serif" 
+          font-size="90" 
+          font-weight="bold" 
+          letter-spacing="12" 
+          text-anchor="middle" 
+          fill="url(#elegant-gold)">K-QUEST</text>
+          
+    <!-- 3. Decorative Elements (Original Style) -->
+    <!-- Circle Outline -->
+    <circle cx="0" cy="0" r="280" fill="none" stroke="url(#elegant-gold)" stroke-width="2" opacity="0.3"/>
+    
+    <!-- Horizontal Line -->
+    <line x1="-200" y1="180" x2="200" y2="180" stroke="url(#elegant-gold)" stroke-width="1" opacity="0.5"/>
+
+  </g>
+</svg>

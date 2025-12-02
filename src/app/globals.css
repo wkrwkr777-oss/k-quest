@@ -1,58 +1,35 @@
-/* 💎 Premium Design System - Import fonts first */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-gold-50: #FFFBEB;
+  --color-gold-100: #FEF3C7;
+  --color-gold-200: #FDE68A;
+  --color-gold-300: #FCD34D;
+  --color-gold-400: #FBBF24;
+  --color-gold-500: #F59E0B;
+  --color-gold-600: #D97706;
+  --color-gold-700: #B45309;
+  --color-gold-800: #92400E;
+  --color-gold-900: #78350F;
 
-:root {
-  /* Premium Color Palette */
-  --bg-primary: #0A0A0A;
-  --bg-secondary: #1A1A1A;
-  --bg-tertiary: #262626;
-
-  /* Luxury Gold Gradients */
-  --gold-50: #FFFBEB;
-  --gold-100: #FEF3C7;
-  --gold-400: #FBBF24;
-  --gold-500: #D4AF37;
-  --gold-600: #C5A028;
-  --gold-700: #A38216;
-
-  /* Accent Colors */
-  --purple-500: #8B5CF6;
-  --purple-600: #7C3AED;
-
-  /* Text Colors */
-  --text-primary: #FFFFFF;
-  --text-secondary: #D1D5DB;
-  --text-tertiary: #9CA3AF;
-
-  /* Borders */
-  --border-primary: #333333;
-  --border-secondary: rgba(255, 255, 255, 0.1);
-
-  /* Glass Effect */
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
-
-  /* Shadows */
-  --shadow-glow: 0 0 30px rgba(212, 175, 55, 0.5);
-  --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.8);
+  --font-sans: var(--font-outfit), var(--font-noto), ui-sans-serif, system-ui, sans-serif;
 }
 
-* {
-  scroll-behavior: smooth;
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 5, 5, 5;
+  --background-end-rgb: 5, 5, 5;
+  --gold-primary: #D4AF37;
 }
 
 body {
-  color: var(--text-primary);
-  background: var(--bg-primary);
-  font-family: 'Inter', 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.6;
-  letter-spacing: -0.01em;
+  background-color: #050505;
+  color: white;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-weight: 300;
+  /* Default to thin/light as requested */
 }
 
 h1,
@@ -61,326 +38,161 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  /* Slightly bolder but still clean */
+}
+
+/* Luxury Button */
+.btn-luxury {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #D4AF37;
+  transition: all 0.3s;
+  background-color: transparent;
+  border: 1px solid #D4AF37;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.btn-luxury:hover {
+  background-color: #D4AF37;
+  color: black;
+}
+
+.font-arabic {
+  font-family: 'Noto Sans Arabic', sans-serif;
+}
+
+/* RTL 지원: 아랍어 모드일 때 좌우 반전 */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* 📱 반응형 타이포그래피 (모든 기기 완벽 지원) */
+html {
+  /* 기본 폰트 크기: 화면 크기에 따라 자동 조절 */
+  font-size: clamp(14px, 1vw + 0.5rem, 18px);
+}
+
+body {
+  /* 줄 간격 최적화 */
+  line-height: 1.6;
+  /* 터치 최적화 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 제목 크기 자동 조절 */
+h1 {
+  font-size: clamp(1.75rem, 5vw, 3rem);
   line-height: 1.2;
 }
 
-/* Premium Utilities */
-@layer utilities {
-
-  /* Gold Gradient Text */
-  .text-gradient-gold {
-    background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #D4AF37 100%);
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-shift 3s ease infinite;
-  }
-
-  /* Glass Morphism */
-  .glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-  }
-
-  /* Premium Glow */
-  .glow-gold {
-    box-shadow: var(--shadow-glow);
-  }
-
-  /* Premium Card */
-  .premium-card {
-    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-    border: 1px solid var(--border-primary);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .premium-card:hover {
-    border-color: var(--gold-500);
-    box-shadow: var(--shadow-glow);
-    transform: translateY(-4px);
-  }
-
-  /* Premium Button */
-  .btn-premium {
-    background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 100%);
-    color: #000;
-    font-weight: 700;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.75rem;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-premium::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.5s;
-  }
-
-  .btn-premium:hover::before {
-    left: 100%;
-  }
-
-  .btn-premium:hover {
-    box-shadow: var(--shadow-glow);
-    transform: translateY(-2px);
-  }
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1.3;
 }
 
-/* Premium Animations */
-@keyframes gradient-shift {
-
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
+h3 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  line-height: 1.4;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse-glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-  }
-
-  50% {
-    box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
-  }
-}
-
-@keyframes shimmer {
-  from {
-    background-position: -1000px 0;
-  }
-
-  to {
-    background-position: 1000px 0;
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.6s ease-out forwards;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.6s ease-out forwards;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite;
-}
-
-/* Delay Classes */
-.delay-100 {
-  animation-delay: 0.1s;
-}
-
-.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.delay-300 {
-  animation-delay: 0.3s;
-}
-
-.delay-400 {
-  animation-delay: 0.4s;
-}
-
-.delay-500 {
-  animation-delay: 0.5s;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
-}
-
-/* Selection */
-::selection {
-  background: var(--gold-500);
-  color: #000;
-}
-
-/* Focus States */
-:focus-visible {
-  outline: 2px solid var(--gold-500);
-  outline-offset: 2px;
-}
-
-/* Link Styles */
-a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: var(--gold-500);
-}
-
-nav a {
-  color: var(--text-primary) !important;
-}
-
-nav a:hover {
-  color: var(--gold-500) !important;
-}
-
-/* Premium Input Fields */
-input,
-textarea,
-select {
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-primary);
-  color: var(--text-primary);
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: var(--gold-500);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
-}
-
-/* Premium Badges */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.badge-gold {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(197, 160, 40, 0.1));
-  border: 1px solid rgba(212, 175, 55, 0.5);
-  color: var(--gold-500);
-}
-
-.badge-premium {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(124, 58, 237, 0.1));
-  border: 1px solid rgba(139, 92, 246, 0.5);
-  color: var(--purple-500);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
+/* 모바일 최적화 */
+@media (max-width: 640px) {
   body {
     font-size: 14px;
   }
 
-  .premium-card {
-    padding: 1rem;
+  /* 작은 화면에서 패딩 줄이기 */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* 버튼 터치 영역 확보 (최소 44px) */
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 
-/* Print Styles */
-@media print {
-  * {
-    background: white !important;
-    color: black !important;
+/* 태블릿 최적화 */
+@media (min-width: 641px) and (max-width: 1024px) {
+  body {
+    font-size: 16px;
   }
+}
+
+/* 데스크톱 */
+@media (min-width: 1025px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+/* 가로 스크롤 방지 (모바일에서 중요) */
+* {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+img,
+video {
+  height: auto;
+  /* 비율 유지 */
+}
+
+.btn-luxury-filled {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: black;
+  transition: all 0.3s;
+  background-color: #D4AF37;
+  border: 1px solid #D4AF37;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.btn-luxury-filled:hover {
+  background-color: #F4CF57;
+  border-color: #F4CF57;
+}
+
+/* Premium Card */
+.premium-card {
+  background-color: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  transition: all 0.5s;
+}
+
+.premium-card:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: translateY(-4px);
+}
+
+.text-gold-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #D4AF37, #F4CF57, #D4AF37);
 }

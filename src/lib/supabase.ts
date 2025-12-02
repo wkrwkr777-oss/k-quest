@@ -1,16 +1,19 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+// 세희님의 Supabase 키 (환경변수 우선, 없으면 하드코딩 값 사용)
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://spzsyuawxiyszxwusibg.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNwenN5dWF3eGl5c3p4d3VzaWJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQzMjQyMjksImV4cCI6MjA3OTkwMDIyOX0._5wbiboDtUXWnRPIKuNfk04DAWxmVb6M53y9hY-rqgs';
 
-// 빌드 타임이나 환경 변수가 없을 때 에러 방지
-export const supabase = (supabaseUrl && supabaseAnonKey)
-    ? createClient(supabaseUrl, supabaseAnonKey)
-    : {} as any;
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Server-side client with service role key (admin privileges)
-const supabaseServiceKey = process.env.SUPABASE_KEY || ''
+// Admin client (server-side only) - Service Role Key 필요
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-export const supabaseAdmin = (typeof window === 'undefined' && supabaseUrl && supabaseServiceKey)
-    ? createClient(supabaseUrl, supabaseServiceKey)
-    : {} as any;
+export const supabaseAdmin = supabaseServiceKey
+    ? createClient(supabaseUrl, supabaseServiceKey, {
+        auth: {
+            autoRefreshToken: false,
+            persistSession: false
+        }
+    })
+    : supabase; // Fallback to regular client (will fail for admin tasks but fixes build import)

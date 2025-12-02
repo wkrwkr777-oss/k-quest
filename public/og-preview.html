@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Quest OG Image Preview</title>
+    <!-- Google Fonts - Poppins (부드러운 Q) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;0,700;1,700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #333;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .og-container {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(to bottom right, #000000, #111111);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .top-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #000000, #D4AF37, #000000);
+            opacity: 0.8;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            width: 100%;
+            height: 200px;
+        }
+
+        .logo-text {
+            font-size: 110px;
+            font-weight: 700;
+            /* 두께 줄임 (900 → 700) */
+            letter-spacing: -0.02em;
+            font-style: italic;
+            line-height: 1.5;
+            padding: 0 40px;
+
+            /* Gold Gradient Text */
+            background: linear-gradient(to bottom, #FFD700, #B8860B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+
+            text-shadow: 0 0 80px rgba(212, 175, 55, 0.2);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            color: #D4AF37;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .description {
+            font-size: 24px;
+            color: #888888;
+            max-width: 800px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .tags {
+            display: flex;
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .tag {
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 100px;
+            color: #D4AF37;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="og-container">
+        <div class="top-line"></div>
+
+        <div class="logo-area">
+            <div class="logo-text">K-QUEST</div>
+        </div>
+
+        <div class="subtitle">Premium Local Concierge</div>
+        <div class="description">Connect with verified local experts for VIP experiences in Korea</div>
+
+        <div class="tags">
+            <div class="tag">VIP Travel</div>
+            <div class="tag">Dining</div>
+            <div class="tag">Shopping</div>
+            <div class="tag">Business</div>
+        </div>
+    </div>
+</body>
+
+</html>

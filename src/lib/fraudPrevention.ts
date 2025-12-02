@@ -223,9 +223,9 @@ export async function detectSuspiciousPatterns(
             .limit(10);
 
         if (quests) {
-            const avgReward = quests.reduce((sum, q) => sum + q.reward, 0) / quests.length;
+            const avgReward = quests.reduce((sum: number, q: any) => sum + q.reward, 0) / quests.length;
             const hasAbnormalPrices = quests.some(
-                (q) => q.reward < 1 || q.reward > avgReward * 10
+                (q: any) => q.reward < 1 || q.reward > avgReward * 10
             );
 
             if (hasAbnormalPrices) {

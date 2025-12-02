@@ -57,7 +57,7 @@ export function QuestChat({
                     table: 'chat_messages',
                     filter: `quest_id=eq.${questId}`,
                 },
-                (payload) => {
+                (payload: any) => {
                     const newMsg = payload.new as Message;
                     if (newMsg.sender_id !== currentUserId) {
                         setMessages((prev) => [...prev, newMsg]);
@@ -263,8 +263,8 @@ export function QuestChat({
                         >
                             <div
                                 className={`max-w-[70%] rounded-lg p-3 ${isMine
-                                        ? 'bg-[#D4AF37] text-black'
-                                        : 'bg-[#262626] text-white'
+                                    ? 'bg-[#D4AF37] text-black'
+                                    : 'bg-[#262626] text-white'
                                     } ${msg.is_flagged ? 'border-2 border-red-500' : ''}`}
                             >
                                 <p className="text-sm break-words">{displayMessage}</p>

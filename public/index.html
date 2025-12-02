@@ -1,18 +1,249 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
-    <meta http-equiv="refresh" content="0;url=/auth-check">
-    <title>K-Quest - Private</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Quest - Premium Korea Concierge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 2px solid #D4AF37;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 20px;
+            color: #888;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            color: #D4AF37;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: #ccc;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            color: #000;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 12px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 60px 20px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #D4AF37;
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #D4AF37;
+        }
+
+        .feature-card p {
+            color: #bbb;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #D4AF37;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #888;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 2px solid #D4AF37;
+            margin-top: 80px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            color: #00ff00;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 
 <body>
-    <script>
-        window.location.href = '/auth-check';
-    </script>
+    <div class="container">
+        <header>
+            <div class="logo">K-QUEST</div>
+            <div class="tagline">Korea's Premier Luxury Concierge Platform</div>
+            <div class="status">✅ 임시 웹 정상 작동 중 | localhost:3000</div>
+        </header>
+
+        <section class="hero">
+            <h1>Experience Korea<br><span class="highlight">Like a VVIP</span></h1>
+            <p>Connect with verified local experts for exclusive experiences</p>
+            <a href="#" class="cta-button">Start Your Premium Journey</a>
+        </section>
+
+        <section class="stats">
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10K+</div>
+                <div class="stat-label">Verified Experts</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">$1M</div>
+                <div class="stat-label">Insurance Coverage</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">VIP Support</div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Verified Experts</h3>
+                <p>Every expert is government-ID verified with 98%+ success rate. Your safety is guaranteed.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💎</div>
+                <h3>$1M Insurance</h3>
+                <p>All transactions protected by $1M insurance coverage. 100% money-back guarantee.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>AI Smart Matching</h3>
+                <p>Advanced AI matches you with the perfect expert in seconds. Success prediction included.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌏</div>
+                <h3>Real-time Translation</h3>
+                <p>Communicate in 12+ languages with auto-translation. No language barriers.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Secure Escrow</h3>
+                <p>Premium escrow system holds payment until quest completion. 100% secure.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👑</div>
+                <h3>24/7 VIP Support</h3>
+                <p>Dedicated concierge team available round-the-clock for Platinum members.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 K-Quest Premium. All rights reserved.</p>
+            <p style="color: #666; margin-top: 10px; font-size: 14px;">
+                포텐타로 | 사업자등록번호: 624-17-02651 | 통신판매업: 제2025-의정부송산-0387호
+            </p>
+            <p style="color: #00ff00; margin-top: 20px;">
+                ✅ 이 페이지는 quest-k.com과 완전히 분리된 로컬 임시 웹입니다
+            </p>
+        </footer>
+    </div>
 </body>
 
 </html>
