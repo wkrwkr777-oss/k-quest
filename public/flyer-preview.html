@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Quest Flyer - Minimalist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5f7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .print-buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .print-btn {
+            padding: 12px 32px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .print-btn:hover {
+            background: #333;
+        }
+
+        .flyer-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .flyer {
+            width: 420px;
+            height: 594px;
+            background: #FFFFFF;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 앞면 - 애플 스타일 */
+        .flyer-front {
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* K 아이콘 - 금빛 */
+        .k-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(255, 215, 0, 0.4);
+        }
+
+        .main-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 50px;
+        }
+
+        /* QR 코드 - 크게! */
+        .qr-wrapper {
+            margin: 40px 0;
+        }
+
+        .qr-code-large {
+            width: 220px;
+            height: 220px;
+            background: #000;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qr-code-large::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: #fff;
+            border-radius: 12px;
+        }
+
+        .qr-placeholder {
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .scan-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        .bonus-text {
+            font-size: 16px;
+            color: #FFD700;
+            font-weight: 600;
+            background: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .website {
+            font-size: 15px;
+            color: #999;
+            margin-top: auto;
+        }
+
+        /* 뒷면 - 삼성 스타일 */
+        .flyer-back {
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            background: #FAFAFA;
+        }
+
+        .back-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 30px;
+        }
+
+        .back-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .feature-list {
+            margin: 40px 0;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .cta-box {
+            background: #000;
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .cta-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 8px;
+        }
+
+        .cta-subtitle {
+            font-size: 14px;
+            color: #fff;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .print-buttons {
+                display: none;
+            }
+
+            .flyer-container {
+                gap: 0;
+            }
+
+            .flyer {
+                page-break-after: always;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="print-buttons">
+        <button class="print-btn" onclick="window.print()">🖨️ 인쇄하기</button>
+        <button class="print-btn" onclick="window.print()">📥 PDF 저장</button>
+    </div>
+
+    <div class="flyer-container">
+        <!-- 앞면 - 미니멀 -->
+        <div class="flyer flyer-front">
+            <!-- K 아이콘 (금빛) -->
+            <div class="k-icon">K</div>
+
+            <!-- 메인 타이틀 -->
+            <div class="main-title">K-Quest</div>
+            <div class="subtitle">Your Korean Guide</div>
+
+            <!-- 큰 QR 코드 -->
+            <div class="qr-wrapper">
+                <div class="qr-code-large">
+                    <div class="qr-placeholder">
+                        [QR CODE]<br>
+                        Place here
+                    </div>
+                </div>
+                <div class="scan-text">Scan for instant help</div>
+                <div class="bonus-text">🎁 5,000₩ Welcome Bonus</div>
+            </div>
+
+            <!-- 하단 웹사이트 -->
+            <div class="website">www.k-quest.com</div>
+        </div>
+
+        <!-- 뒷면 - 심플 -->
+        <div class="flyer flyer-back">
+            <!-- 작은 K 아이콘 -->
+            <div class="back-icon">K</div>
+
+            <!-- 타이틀 -->
+            <div class="back-title">Korean Locals<br>Help You Travel</div>
+
+            <!-- 3개 핵심 기능만 -->
+            <div class="feature-list">
+                <div class="feature">
+                    <div class="feature-icon">🍜</div>
+                    <div class="feature-text">Restaurant reservations<br>No language barrier</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🛍️</div>
+                    <div class="feature-text">Shopping assistance<br>Best local prices</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-text">Real-time translation<br>24/7 available</div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <div class="cta-title">Download Now</div>
+                <div class="cta-subtitle">www.k-quest.com</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // QR 코드 생성 안내
+        console.log('QR 코드는 https://qr.naver.com 에서 생성하세요!');
+        console.log('URL: https://k-quest.vercel.app');
+    </script>
+</body>
+
+</html>

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { useStore } from "@/lib/store";
 import { useEffect, useState } from "react";
 import { NotificationCenter } from "@/components/NotificationCenter";
+import { InstallAppButton } from "@/components/InstallAppButton";
 
 export function Header() {
     const { language, setLanguage, t, user, logout, addToast } = useStore();
@@ -131,6 +132,9 @@ export function Header() {
                                     <Search className="h-4 w-4" />
                                 </button>
                             </Link>
+
+                            {/* App Install Button */}
+                            <InstallAppButton />
 
                             <Button
                                 variant={user ? "ghost" : "secondary"}

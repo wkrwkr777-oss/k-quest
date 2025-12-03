@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { supabaseAdmin } from '@/lib/supabase'
+import { BlacklistManager } from '@/components/admin/BlacklistManager'
 
 interface DashboardStats {
     todayRevenue: number
@@ -206,6 +207,11 @@ export default function AdminDashboard() {
                             에러 로그
                         </button>
                     </div>
+                </div>
+
+                {/* 블랙리스트 관리 */}
+                <div className="mt-8">
+                    <BlacklistManager />
                 </div>
             </div>
         </div>

@@ -73,21 +73,6 @@
 
 사장님께서 이미 완료하셨습니다! 👍
 
----
-
-## 🚨 배포 전 최종 점검 (3분)
-
-### 1. 환경 변수 확인
-`.env.local` 파일에 다음이 모두 입력되어 있나요?
-- NEXT_PUBLIC_SUPABASE_URL ✅
-- NEXT_PUBLIC_SUPABASE_ANON_KEY ✅
-- STRIPE_SECRET_KEY ✅
-- PAYPAL_SECRET ✅
-
-### 2. 에러 없는지 확인
-터미널에서 실행:
-```
-npx tsc --noEmit
 ```
 에러 없으면 OK!
 

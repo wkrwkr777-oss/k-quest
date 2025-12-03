@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Quest A4 Flyer</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .flyer-container {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Main Content */
+        .content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60mm 30mm;
+            text-align: center;
+        }
+
+        /* Gold K Icon */
+        .k-icon {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #F4C430 100%);
+            border-radius: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.4);
+            position: relative;
+        }
+
+        .k-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 50%);
+            border-radius: 32px;
+        }
+
+        .k-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 90px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Brand Name */
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #F4C430 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        /* Tagline */
+        .tagline {
+            font-size: 22px;
+            color: #333;
+            font-weight: 300;
+            margin-bottom: 60px;
+            letter-spacing: 1px;
+        }
+
+        /* QR Code */
+        .qr-section {
+            margin-bottom: 50px;
+        }
+
+        .qr-code {
+            width: 240px;
+            height: 240px;
+            background: white;
+            border: 3px solid #f0f0f0;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .qr-placeholder {
+            font-size: 16px;
+            color: #999;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .qr-instruction {
+            font-size: 18px;
+            color: #666;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .bonus-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Features */
+        .features {
+            margin-bottom: 50px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-right: 12px;
+        }
+
+        /* Website */
+        .website {
+            font-size: 20px;
+            color: #999;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Decorative Elements */
+        .corner-decoration {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            opacity: 0.03;
+        }
+
+        .corner-decoration.top-left {
+            top: -50px;
+            left: -50px;
+            background: linear-gradient(135deg, #D4AF37 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .corner-decoration.bottom-right {
+            bottom: -50px;
+            right: -50px;
+            background: linear-gradient(315deg, #D4AF37 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .flyer-container {
+                box-shadow: none;
+                width: 210mm;
+                height: 297mm;
+                page-break-after: always;
+            }
+
+            .print-buttons {
+                display: none !important;
+            }
+        }
+
+        /* Print Buttons */
+        .print-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .print-btn {
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .print-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Info Box */
+        .info-box {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            max-width: 350px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .info-box h3 {
+            color: #D4AF37;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .info-box ol {
+            margin-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        @media print {
+            .info-box {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Print Buttons -->
+    <div class="print-buttons">
+        <button class="print-btn" onclick="window.print()">🖨️ 인쇄하기</button>
+        <button class="print-btn" onclick="downloadPDF()">📥 PDF 저장</button>
+    </div>
+
+    <!-- Info Box -->
+    <div class="info-box">
+        <h3>📋 인쇄 가이드</h3>
+        <ol>
+            <li><strong>QR 코드 생성:</strong> <a href="https://qr.naver.com" target="_blank">qr.naver.com</a>에서 생성</li>
+            <li><strong>URL 입력:</strong> https://k-quest.vercel.app</li>
+            <li><strong>QR 코드를 HTML에 삽입</strong> (아래 코드 수정)</li>
+            <li><strong>인쇄 설정:</strong> A4 / 여백 없음</li>
+        </ol>
+    </div>
+
+    <!-- Flyer Container -->
+    <div class="flyer-container">
+        <!-- Decorative Elements -->
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Gold K Icon -->
+            <div class="k-icon">
+                <div class="k-letter">K</div>
+            </div>
+
+            <!-- Brand Name -->
+            <div class="brand-name">K-QUEST</div>
+
+            <!-- Tagline -->
+            <div class="tagline">Your Premium Korean Guide</div>
+
+            <!-- QR Code Section -->
+            <div class="qr-section">
+                <div class="qr-code">
+                    <!-- QR 코드 이미지를 여기에 넣으세요 -->
+                    <!-- 예시: <img src="qr-code.png" alt="QR Code" style="width: 220px; height: 220px;"> -->
+                    <div class="qr-placeholder">
+                        QR 코드를<br>
+                        여기에<br>
+                        삽입하세요<br>
+                        <small>(240×240px)</small>
+                    </div>
+                </div>
+                <div class="qr-instruction">스캔하고 즉시 도움받기</div>
+                <div class="bonus-tag">🎁 가입 보너스 5,000₩</div>
+            </div>
+
+            <!-- Features -->
+            <div class="features">
+                <div class="feature-item">
+                    <span class="feature-icon">🍜</span>
+                    <span>맛집 예약 도움</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🛍️</span>
+                    <span>쇼핑 가이드</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💬</span>
+                    <span>실시간 통역 서비스</span>
+                </div>
+            </div>
+
+            <!-- Website -->
+            <div class="website">www.k-quest.com</div>
+        </div>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            // PDF 다운로드 안내
+            alert('브라우저의 인쇄 기능을 사용하여 PDF로 저장할 수 있습니다.\n\n1. "인쇄하기" 버튼 클릭\n2. 프린터를 "PDF로 저장" 선택\n3. 저장 버튼 클릭');
+            window.print();
+        }
+
+        // 페이지 로드 시 안내
+        window.addEventListener('load', function () {
+            console.log('%c🎨 K-Quest A4 Flyer', 'font-size: 20px; font-weight: bold; color: #D4AF37;');
+            console.log('QR 코드 삽입 방법:');
+            console.log('1. https://qr.naver.com 에서 QR 코드 생성');
+            console.log('2. URL: https://k-quest.vercel.app 입력');
+            console.log('3. 다운로드한 QR 코드 이미지를 HTML의 .qr-code 안에 <img> 태그로 삽입');
+            console.log('4. 예시: <img src="qr-code.png" alt="QR" style="width: 220px; height: 220px;">');
+        });
+    </script>
+</body>
+
+</html>

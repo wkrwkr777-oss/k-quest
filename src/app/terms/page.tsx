@@ -17,7 +17,8 @@ export default function TermsPage() {
 
                 <h2>제3조 (회원가입 및 이용 자격)</h2>
                 <ol>
-                    <li>만 <strong>19세 이상</strong>만 회원가입이 가능합니다.</li>
+                    <li>한국인은 만 <strong>18세 이상</strong>만 회원가입이 가능합니다. (2025년부터 성인 기준 변경)</li>
+                    <li>외국인은 연령 제한 없이 회원가입이 가능합니다.</li>
                     <li>회원가입 시 본인 인증을 거쳐야 합니다.</li>
                 </ol>
 

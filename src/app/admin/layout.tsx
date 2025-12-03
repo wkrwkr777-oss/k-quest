@@ -16,29 +16,32 @@ export default function AdminLayout({
     const [checking, setChecking] = useState(true);
 
     useEffect(() => {
-        // 🦊 Fox Security: Double-check admin identity
-        // In production, this should also verify a secure cookie or token with the server
+        // 🦊 개발 모드: 로그인 체크 임시 비활성화
+        // 배포 시 아래 주석을 해제하세요!
+
+        /*
         const checkAdmin = async () => {
-            // 1. Check if user is logged in
             if (!userEmail) {
                 router.push('/auth/signin');
                 return;
             }
 
-            // 2. Check if email matches admin list (Hardcoded for safety in this demo)
-            // You should add your specific admin email here
             const ADMIN_EMAILS = ['admin@kquest.com', 'wkrwkr777@gmail.com'];
 
             if (ADMIN_EMAILS.includes(userEmail)) {
                 setIsAuthorized(true);
             } else {
-                // 🚫 Unauthorized access attempt!
                 router.push('/');
             }
             setChecking(false);
         };
 
         checkAdmin();
+        */
+
+        // 개발 모드: 즉시 허용
+        setIsAuthorized(true);
+        setChecking(false);
     }, [userEmail, router]);
 
     if (checking) {

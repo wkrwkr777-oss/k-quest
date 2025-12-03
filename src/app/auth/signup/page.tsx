@@ -6,11 +6,14 @@ import { useRouter } from 'next/navigation';
 import { Crown, Mail, Lock, User, ArrowRight, Chrome, Github } from 'lucide-react';
 import { PremiumButton, GlassCard, PremiumAlert } from '@/components/PremiumComponents';
 
+
 export default function SignUp() {
     const router = useRouter();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [nationality, setNationality] = useState<'korean' | 'foreign'>('foreign');
+    const [birthdate, setBirthdate] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -25,10 +28,79 @@ export default function SignUp() {
             return;
         }
 
-        // Mock signup
-        setTimeout(() => {
+        // 한국인의 경우 18세 이상 체크 (2025년 성인 기준 변경)
+        if (nationality === 'korean') {
+            if (!birthdate) {
+                setError('생년월일을 입력해주세요.');
+                setLoading(false);
+                return;
+            }
+
+            const today = new Date();
+            const birth = new Date(birthdate);
+            let age = today.getFullYear() - birth.getFullYear();
+            const monthDiff = today.getMonth() - birth.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+                age--;
+            }
+
+            if (age < 18) {
+                setError('한국인은 만 18세 이상만 가입 가능합니다. (2025년부터 성인 기준 변경)');
+                setLoading(false);
+                return;
+            }
+        }
+
+        // 실제 Supabase 회원가입
+        try {
+            const { createClient } = await import('@supabase/supabase-js');
+            const supabase = createClient(
+                process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+            );
+
+            // 1. 이메일/비밀번호로 회원가입
+            const { data: authData, error: authError } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: {
+                        full_name: name,
+                    }
+                }
+            });
+
+            if (authError) throw authError;
+
+            // 2. 프로필 테이블에 국적 및 생년월일 저장
+            if (authData.user) {
+                const { error: profileError } = await supabase
+                    .from('profiles')
+                    .insert({
+                        id: authData.user.id,
+                        email: email,
+                        full_name: name,
+                        nationality: nationality,
+                        birthdate: nationality === 'korean' ? birthdate : null,
+                    });
+
+                if (profileError) {
+                    // 서버에서 연령 체크 실패 시 (만 18세 미만)
+                    if (profileError.message.includes('18세')) {
+                        setError(profileError.message);
+                        setLoading(false);
+                        return;
+                    }
+                    throw profileError;
+                }
+            }
+
+            // 성공 시 대시보드로 이동
             router.push('/dashboard');
-        }, 1500);
+        } catch (err: any) {
+            setError(err.message || '회원가입 중 오류가 발생했습니다.');
+            setLoading(false);
+        }
     };
 
     return (
@@ -55,6 +127,48 @@ export default function SignUp() {
                     <form onSubmit={handleSignUp} className="space-y-6">
                         {error && (
                             <PremiumAlert type="error" message={error} />
+                        )}
+
+                        {/* Nationality Selection */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-3">Nationality / 국적</label>
+                            <div className="grid grid-cols-2 gap-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setNationality('korean')}
+                                    className={`py-3 px-4 rounded-xl border-2 transition-all ${nationality === 'korean'
+                                        ? 'bg-[#D4AF37] border-[#D4AF37] text-black font-bold'
+                                        : 'bg-[#1A1A1A] border-[#333] text-gray-400 hover:border-[#D4AF37]'
+                                        }`}
+                                >
+                                    🇰🇷 한국인
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setNationality('foreign')}
+                                    className={`py-3 px-4 rounded-xl border-2 transition-all ${nationality === 'foreign'
+                                        ? 'bg-[#D4AF37] border-[#D4AF37] text-black font-bold'
+                                        : 'bg-[#1A1A1A] border-[#333] text-gray-400 hover:border-[#D4AF37]'
+                                        }`}
+                                >
+                                    🌍 외국인
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Manual Input (Korean only) */}
+                        {nationality === 'korean' && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">생년월일 (Birthdate)</label>
+                                <input
+                                    type="date"
+                                    value={birthdate}
+                                    onChange={(e) => setBirthdate(e.target.value)}
+                                    className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl py-3 px-4 text-white focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all outline-none"
+                                    required
+                                />
+                                <p className="text-xs text-gray-500 mt-2">만 18세 이상만 가입 가능합니다. (2025년부터 성인 기준 변경)</p>
+                            </div>
                         )}
 
                         <div>

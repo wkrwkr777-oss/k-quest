@@ -91,7 +91,7 @@ export default function RootLayout({
     <html lang="en" className={`${outfit.variable} ${notoSansKr.variable}`}>
       <head>
         {/* 🔥 FACEBOOK PIXEL (리타겟팅 광고의 핵심!) */}
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)
@@ -111,10 +111,10 @@ export default function RootLayout({
           <img height="1" width="1" style={{ display: 'none' }}
             src="https://www.facebook.com/tr?id=YOUR_FACEBOOK_PIXEL_ID&ev=PageView&noscript=1"
           />
-        </noscript>
+        </noscript> */}
 
         {/* 🎯 GOOGLE ADS CONVERSION TRACKING */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX" />
+        {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -129,10 +129,10 @@ export default function RootLayout({
               gtag('config', 'AW-CONVERSION_ID');
             `,
           }}
-        />
+        /> */}
 
         {/* 🌟 NAVER ANALYTICS (한국 시장용) */}
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               if(!wcs_add) var wcs_add = {};
@@ -144,7 +144,7 @@ export default function RootLayout({
               }
             `,
           }}
-        />
+        /> */}
 
         {/* SEO & Social Sharing (Fox Strategy: Be Everywhere) */}
         <meta name="keywords" content="Korea Travel, K-Pop Experience, Korean Guide, Seoul Tour, K-Quest, Concierge Korea" />
@@ -152,19 +152,7 @@ export default function RootLayout({
         <meta property="og:site_name" content="K-Quest" />
         <meta name="twitter:card" content="summary_large_image" />
 
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                  for(let registration of registrations) {
-                    registration.unregister();
-                  }
-                });
-              }
-            `,
-          }}
-        />
+
       </head>
       <body className="font-sans antialiased bg-[#050505] text-white min-h-screen selection:bg-[#D4AF37] selection:text-black">
         <LanguageProvider>
