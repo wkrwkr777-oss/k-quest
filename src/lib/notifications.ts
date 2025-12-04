@@ -1,308 +1,238 @@
+// ============================================
 // 알림 시스템
+// ============================================
+
 import { supabase } from './supabase';
 
-export interface Notification {
-    id: string;
-    user_id: string;
-    type: string;
-    title: string;
-    message: string;
-    link?: string;
-    is_read: boolean;
-    created_at: string;
-}
-
 export type NotificationType =
+    | 'quest_application'
     | 'quest_accepted'
     | 'quest_completed'
-    | 'new_application'
-    | 'application_accepted'
-    | 'application_rejected'
-    | 'new_message'
-    | 'payment_received'
-    | 'payment_sent'
-    | 'withdrawal_completed'
+    | 'message_received'
     | 'review_received'
-    | 'warning'
-    | 'ban'
-    | 'quest_approved'
-    | 'quest_rejected'
-    | 'info'
-    | 'success';
+    | 'payment_received'
+    | 'sos_alert'
+    | 'admin_message';
 
 /**
  * 알림 생성
  */
-export async function createNotification(
-    userId: string,
-    type: NotificationType,
-    title: string,
-    message: string,
-    link?: string
-): Promise<void> {
+export async function createNotification(params: {
+    userId: string;
+    type: NotificationType;
+    title: string;
+    message: string;
+    data?: any;
+}): Promise<{ success: boolean }> {
     try {
-        const { error } = await supabase.from('notifications').insert({
-            user_id: userId,
-            type,
-            title,
-            message,
-            link,
+        await supabase.from('notifications').insert({
+            user_id: params.userId,
+            type: params.type,
+            title: params.title,
+            message: params.message,
+            data: params.data || {},
+            read: false
         });
 
-        if (error) throw error;
-
-        // 브라우저 푸시 알림 (권한이 있는 경우)
-        if (Notification.permission === 'granted') {
-            new Notification(title, {
-                body: message,
-                icon: '/icon-512x512.png',
-                badge: '/icon-192x192.png',
-            });
-        }
+        return { success: true };
     } catch (error) {
         console.error('Failed to create notification:', error);
+        return { success: false };
     }
 }
 
 /**
- * 사용자의 알림 목록 가져오기
+ * Quest 관련 자동 알림
  */
-export async function getNotifications(
+
+// Quest 신청 알림
+export async function notifyQuestApplication(params: {
+    questOwnerId: string;
+    applicantName: string;
+    questTitle: string;
+    questId: string;
+}) {
+    return createNotification({
+        userId: params.questOwnerId,
+        type: 'quest_application',
+        title: '🎯 새로운 Quest 신청!',
+        message: `${params.applicantName}님이 "${params.questTitle}" Quest에 신청했습니다.`,
+        data: { questId: params.questId }
+    });
+}
+
+// Quest 수락 알림
+export async function notifyQuestAccepted(params: {
+    performerId: string;
+    questTitle: string;
+    questId: string;
+}) {
+    return createNotification({
+        userId: params.performerId,
+        type: 'quest_accepted',
+        title: '🎉 Quest 신청 수락!',
+        message: `"${params.questTitle}" Quest가 수락되었습니다! 이제 시작할 수 있습니다.`,
+        data: { questId: params.questId }
+    });
+}
+
+// Quest 완료 알림
+export async function notifyQuestCompleted(params: {
+    clientId: string;
+    performerId: string;
+    questTitle: string;
+    questId: string;
+}) {
+    // 의뢰자에게
+    await createNotification({
+        userId: params.clientId,
+        type: 'quest_completed',
+        title: '✅ Quest 완료!',
+        message: `"${params.questTitle}" Quest가 완료되었습니다. 리뷰를 작성해주세요!`,
+        data: { questId: params.questId }
+    });
+
+    // 수행자에게
+    await createNotification({
+        userId: params.performerId,
+        type: 'quest_completed',
+        title: '💰 Quest 완료!',
+        message: `"${params.questTitle}" Quest 완료! 정산이 진행됩니다.`,
+        data: { questId: params.questId }
+    });
+}
+
+// 결제 완료 알림
+export async function notifyPaymentReceived(params: {
+    userId: string;
+    amount: number;
+    questTitle: string;
+}) {
+    return createNotification({
+        userId: params.userId,
+        type: 'payment_received',
+        title: '💵 결제 완료!',
+        message: `"${params.questTitle}" - ${params.amount.toLocaleString()}원이 입금되었습니다.`,
+        data: { amount: params.amount }
+    });
+}
+
+// 리뷰 받음 알림
+export async function notifyReviewReceived(params: {
+    userId: string;
+    reviewerName: string;
+    rating: number;
+    questTitle: string;
+}) {
+    const stars = '⭐'.repeat(params.rating);
+
+    return createNotification({
+        userId: params.userId,
+        type: 'review_received',
+        title: '⭐ 새로운 리뷰!',
+        message: `${params.reviewerName}님이 "${params.questTitle}"에 ${stars} 리뷰를 남겼습니다.`,
+        data: { rating: params.rating }
+    });
+}
+
+// SOS 긴급 알림 (관리자에게)
+export async function notifySOSAlert(params: {
+    questId: string;
+    reporterName: string;
+    severity: string;
+    message: string;
+}) {
+    // 모든 관리자에게 알림
+    const { data: admins } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('is_admin', true);
+
+    if (!admins) return;
+
+    for (const admin of admins) {
+        await createNotification({
+            userId: admin.id,
+            type: 'sos_alert',
+            title: `🆘 긴급 SOS (${params.severity.toUpperCase()})!`,
+            message: `${params.reporterName}: ${params.message}`,
+            data: { questId: params.questId, severity: params.severity }
+        });
+    }
+}
+
+/**
+ * 사용자 알림 조회
+ */
+export async function getUserNotifications(
     userId: string,
-    limit = 50
-): Promise<Notification[]> {
+    limit = 20
+): Promise<any[]> {
     try {
-        const { data, error } = await supabase
+        const { data } = await supabase
             .from('notifications')
             .select('*')
             .eq('user_id', userId)
             .order('created_at', { ascending: false })
             .limit(limit);
 
-        if (error) throw error;
         return data || [];
     } catch (error) {
-        console.error('Failed to fetch notifications:', error);
+        console.error('Failed to get notifications:', error);
         return [];
-    }
-}
-
-/**
- * 안 읽은 알림 개수
- */
-export async function getUnreadCount(userId: string): Promise<number> {
-    try {
-        const { count, error } = await supabase
-            .from('notifications')
-            .select('*', { count: 'exact', head: true })
-            .eq('user_id', userId)
-            .eq('is_read', false);
-
-        if (error) throw error;
-        return count || 0;
-    } catch (error) {
-        console.error('Failed to fetch unread count:', error);
-        return 0;
     }
 }
 
 /**
  * 알림 읽음 처리
  */
-export async function markAsRead(notificationId: string): Promise<void> {
+export async function markNotificationAsRead(
+    notificationId: string
+): Promise<{ success: boolean }> {
     try {
-        const { error } = await supabase
+        await supabase
             .from('notifications')
-            .update({ is_read: true })
+            .update({ read: true })
             .eq('id', notificationId);
 
-        if (error) throw error;
+        return { success: true };
     } catch (error) {
-        console.error('Failed to mark notification as read:', error);
+        return { success: false };
     }
 }
 
 /**
  * 모든 알림 읽음 처리
  */
-export async function markAllAsRead(userId: string): Promise<void> {
+export async function markAllNotificationsAsRead(
+    userId: string
+): Promise<{ success: boolean }> {
     try {
-        const { error } = await supabase
+        await supabase
             .from('notifications')
-            .update({ is_read: true })
+            .update({ read: true })
             .eq('user_id', userId)
-            .eq('is_read', false);
+            .eq('read', false);
 
-        if (error) throw error;
+        return { success: true };
     } catch (error) {
-        console.error('Failed to mark all as read:', error);
+        return { success: false };
     }
 }
 
 /**
- * 실시간 알림 구독
+ * 읽지 않은 알림 수
  */
-export function subscribeToNotifications(
-    userId: string,
-    callback: (notification: Notification) => void
-) {
-    const channel = supabase
-        .channel('notifications')
-        .on(
-            'postgres_changes',
-            {
-                event: 'INSERT',
-                schema: 'public',
-                table: 'notifications',
-                filter: `user_id=eq.${userId}`,
-            },
-            (payload: { new: { [key: string]: any } }) => {
-                callback(payload.new as Notification);
-            }
-        )
-        .subscribe();
+export async function getUnreadCount(userId: string): Promise<number> {
+    try {
+        const { count } = await supabase
+            .from('notifications')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .eq('read', false);
 
-    return () => {
-        supabase.removeChannel(channel);
-    };
+        return count || 0;
+    } catch (error) {
+        return 0;
+    }
 }
-
-/**
- * 브라우저 푸시 알림 권한 요청
- */
-export async function requestNotificationPermission(): Promise<boolean> {
-    if (!('Notification' in window)) {
-        return false;
-    }
-
-    if (Notification.permission === 'granted') {
-        return true;
-    }
-
-    if (Notification.permission !== 'denied') {
-        const permission = await Notification.requestPermission();
-        return permission === 'granted';
-    }
-
-    return false;
-}
-
-// 알림 타입별 기본 메시지
-export const NOTIFICATION_MESSAGES = {
-    ko: {
-        quest_accepted: {
-            title: 'Quest 수락됨',
-            message: '귀하의 Quest가 수행자에 의해 수락되었습니다.',
-        },
-        quest_completed: {
-            title: 'Quest 완료',
-            message: 'Quest가 성공적으로 완료되었습니다.',
-        },
-        new_application: {
-            title: '새 지원자',
-            message: '귀하의 Quest에 새로운 지원자가 있습니다.',
-        },
-        application_accepted: {
-            title: '지원 수락됨',
-            message: '귀하의 Quest 지원이 수락되었습니다!',
-        },
-        application_rejected: {
-            title: '지원 거절됨',
-            message: '귀하의 Quest 지원이 거절되었습니다.',
-        },
-        new_message: {
-            title: '새 메시지',
-            message: '새로운 메시지가 도착했습니다.',
-        },
-        payment_received: {
-            title: '결제 완료',
-            message: '결제가 성공적으로 완료되었습니다.',
-        },
-        payment_sent: {
-            title: '송금 완료',
-            message: '송금이 성공적으로 완료되었습니다.',
-        },
-        withdrawal_completed: {
-            title: '출금 완료',
-            message: '출금이 성공적으로 처리되었습니다.',
-        },
-        review_received: {
-            title: '새 리뷰',
-            message: '새로운 리뷰가 등록되었습니다.',
-        },
-        warning: {
-            title: '⚠️ 경고',
-            message: '플랫폼 정책 위반이 감지되었습니다.',
-        },
-        ban: {
-            title: '🚫 계정 정지',
-            message: '귀하의 계정이 정지되었습니다.',
-        },
-        quest_approved: {
-            title: '✅ Quest 승인됨',
-            message: '귀하의 Quest가 승인되어 공개되었습니다.',
-        },
-        quest_rejected: {
-            title: '❌ Quest 거절됨',
-            message: '귀하의 Quest가 거절되었습니다. 자세한 내용을 확인하세요.',
-        },
-    },
-    en: {
-        quest_accepted: {
-            title: 'Quest Accepted',
-            message: 'Your Quest has been accepted by a performer.',
-        },
-        quest_completed: {
-            title: 'Quest Completed',
-            message: 'Quest has been successfully completed.',
-        },
-        new_application: {
-            title: 'New Application',
-            message: 'You have a new applicant for your Quest.',
-        },
-        application_accepted: {
-            title: 'Application Accepted',
-            message: 'Your Quest application has been accepted!',
-        },
-        application_rejected: {
-            title: 'Application Rejected',
-            message: 'Your Quest application has been rejected.',
-        },
-        new_message: {
-            title: 'New Message',
-            message: 'You have a new message.',
-        },
-        payment_received: {
-            title: 'Payment Received',
-            message: 'Payment has been successfully received.',
-        },
-        payment_sent: {
-            title: 'Payment Sent',
-            message: 'Payment has been successfully sent.',
-        },
-        withdrawal_completed: {
-            title: 'Withdrawal Completed',
-            message: 'Your withdrawal has been processed.',
-        },
-        review_received: {
-            title: 'New Review',
-            message: 'You have received a new review.',
-        },
-        warning: {
-            title: '⚠️ Warning',
-            message: 'Policy violation detected.',
-        },
-        ban: {
-            title: '🚫 Account Suspended',
-            message: 'Your account has been suspended.',
-        },
-        quest_approved: {
-            title: '✅ Quest Approved',
-            message: 'Your Quest has been approved and published.',
-        },
-        quest_rejected: {
-            title: '❌ Quest Rejected',
-            message: 'Your Quest has been rejected. Please check details.',
-        },
-    },
-};
